@@ -30,3 +30,14 @@
 *.exe
 *.out
 *.app
+
+# vscode junk
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# compiled code 
+*.out
