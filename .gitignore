@@ -41,3 +41,6 @@
 
 # compiled code 
 *.out
+
+# other junk
+.DS_STORE
