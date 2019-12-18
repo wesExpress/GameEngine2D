@@ -44,3 +44,5 @@
 
 # other junk
 .DS_STORE
+lib/
+include/
