@@ -8,7 +8,7 @@
 int main(void)
 {
     Log::Init();
-    Window gameWindow = Window();
+    Window gameWindow = Window(WindowProps());
     if (glfwInit())
     {
         if (gameWindow.InitWindow())

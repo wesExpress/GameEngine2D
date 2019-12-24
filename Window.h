@@ -3,6 +3,7 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <string>
 
 #include "Logging.h"
 
@@ -20,50 +21,31 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
+struct WindowProps
+{
+    WindowProps(unsigned int width = DEFAULT_WINDOW_WIDTH, 
+    unsigned int height = DEFAULT_WINDOW_HEIGHT, 
+    const std::string& title = DEFAULT_WINDOW_TITLE)
+    :
+    m_width(width),
+    m_height(height),
+    m_title(title)
+    {}
+
+    unsigned int m_width, m_height;
+    std::string m_title;
+};
+
 class Window
 {
     public:
-        Window()
-        {
-            m_width = DEFAULT_WINDOW_WIDTH;
-            m_height = DEFAULT_WINDOW_HEIGHT;
-            m_title = DEFAULT_WINDOW_TITLE;
-        }
-        Window(int width, int height, char* title)
-        :
-        m_width(width),
-        m_height(height),
-        m_title(title)
-        {}
+        Window(const WindowProps& props);
+        ~Window();
 
-        ~Window()
-        {
-            LOG_ERROR("Destroying window.");
-            glfwDestroyWindow(m_window);
-        }
+        bool InitWindow();
 
-        bool InitWindow()
-        {
-            m_window = glfwCreateWindow(m_width, m_height, m_title, NULL, NULL);
-            if (m_window == NULL)
-            {
-                LOG_ERROR("Window failed to initialize!");
-
-                return false;
-            }
-            else
-            {
-                LOG_INFO("Window created.");
-
-                glfwMakeContextCurrent(m_window);
-                glfwSetKeyCallback(m_window, key_callback);
-
-                return true;
-            }
-        }
-
-        inline int GetWidth() const { return m_width; }
-        inline int GetHeight() const { return m_height; }
+        inline int GetWidth() const { return m_windowProps.m_width; }
+        inline int GetHeight() const { return m_windowProps.m_height; }
         inline GLFWwindow* GetWindow() const { return m_window; }
 
     private:
@@ -71,6 +53,8 @@ class Window
 
         int m_width, m_height;
         char* m_title;
+
+        WindowProps m_windowProps;
 };
 
 #endif
