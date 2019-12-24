@@ -13,8 +13,6 @@ int main(void)
     {
         if (gameWindow.InitWindow())
         {
-            glfwMakeContextCurrent(gameWindow.GetWindow());
-
             while (!glfwWindowShouldClose(gameWindow.GetWindow()))
             {
                 glfwPollEvents();

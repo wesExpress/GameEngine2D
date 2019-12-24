@@ -12,7 +12,7 @@
 
 static void error_callback(int error, const char* description)
 {
-    fprintf(stderr, "Error: %s\n", description);
+    LOG_ERROR("GLFW Error ({0}): {1}", error, description);
 }
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -48,12 +48,16 @@ class Window
             if (m_window == NULL)
             {
                 LOG_ERROR("Window failed to initialize!");
+
                 return false;
             }
             else
             {
                 LOG_INFO("Window created.");
+
+                glfwMakeContextCurrent(m_window);
                 glfwSetKeyCallback(m_window, key_callback);
+
                 return true;
             }
         }
