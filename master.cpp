@@ -3,50 +3,34 @@
 #include <iostream>
 
 #include "Logging.h"
-
-static void error_callback(int error, const char* description)
-{
-    fprintf(stderr, "Error: %s\n", description);
-}
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-}
+#include "Window.h"
 
 int main(void)
 {
     Log::Init();
-    GLFWwindow* window = NULL;
+    Window gameWindow = Window();
     if (glfwInit())
     {
-        window = glfwCreateWindow(640, 480, "GLFW Window", NULL, NULL);
-        if (window == NULL)
+        if (gameWindow.InitWindow())
         {
-            LOG_ERROR("Window creation failed.");
-            glfwTerminate();
-        }
-        else
-        {
-            LOG_INFO("Window created.");
+            glfwMakeContextCurrent(gameWindow.GetWindow());
 
-            glfwSetKeyCallback(window, key_callback);
-            glfwMakeContextCurrent(window);
-
-            while (!glfwWindowShouldClose(window))
+            while (!glfwWindowShouldClose(gameWindow.GetWindow()))
             {
                 glfwPollEvents();
             }
+        }
+        else
+        {
+            LOG_ERROR("Terminating glfw.");
+            glfwTerminate();
         }
     }
     else
     {
         LOG_ERROR("GLFW could not be initialized.");
+        glfwTerminate();
     }
-
-    glfwDestroyWindow(window);
-    LOG_ERROR("Window destroyed.");
-    glfwTerminate();
     
     return 0;
 }
