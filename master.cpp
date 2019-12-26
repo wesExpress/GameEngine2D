@@ -11,7 +11,7 @@ int main(void)
     Window gameWindow = Window(WindowProps());
     if (glfwInit())
     {
-        if (gameWindow.InitWindow())
+        if (gameWindow.Init())
         {
             while (!glfwWindowShouldClose(gameWindow.GetWindow()))
             {

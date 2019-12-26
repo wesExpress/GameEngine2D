@@ -1,11 +1,9 @@
 #include "Window.h"
 
 Window::Window(const WindowProps& props)
-{
-    m_windowProps.m_width = props.m_width;
-    m_windowProps.m_height = props.m_height;
-    m_windowProps.m_title = props.m_title;
-}
+:
+m_windowData(props)
+{}
 
 Window::~Window()
 {
@@ -13,13 +11,13 @@ Window::~Window()
     glfwDestroyWindow(m_window);
 }
 
-bool Window::InitWindow()
+bool Window::Init()
 {
     m_window = glfwCreateWindow(
-        m_windowProps.m_width, 
-        m_windowProps.m_height, 
-        m_windowProps.m_title.c_str(), NULL, NULL);
-        
+        m_windowData.width, 
+        m_windowData.height, 
+        m_windowData.title.c_str(), NULL, NULL);
+
     if (m_window == NULL)
     {
         LOG_ERROR("Window failed to initialize!");
@@ -28,13 +26,21 @@ bool Window::InitWindow()
     }
     else
     {
-        LOG_INFO("Window created: {0}, {1}, {2}", 
-        m_windowProps.m_width, 
-        m_windowProps.m_height, 
-        m_windowProps.m_title);
+        LOG_INFO("Window created: {0}x{1}, {2}", 
+        m_windowData.width, 
+        m_windowData.height, 
+        m_windowData.title);
 
         glfwMakeContextCurrent(m_window);
         glfwSetKeyCallback(m_window, key_callback);
+
+        //glfwSetWindowUserPointer(m_window, &m_windowProps);
+
+        //glfwSetWindowCloseCallback(m_window, [](GLFWwindow* window)
+        //{
+        //    WindowProps& props = *(WindowProps*)glfwGetWindowUserPointer(window);
+        //}
+        //);
 
         return true;
     }

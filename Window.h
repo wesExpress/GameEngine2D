@@ -25,15 +25,22 @@ struct WindowProps
 {
     WindowProps(unsigned int width = DEFAULT_WINDOW_WIDTH, 
     unsigned int height = DEFAULT_WINDOW_HEIGHT, 
-    const std::string& title = DEFAULT_WINDOW_TITLE)
+    const char* title = DEFAULT_WINDOW_TITLE)
     :
-    m_width(width),
-    m_height(height),
-    m_title(title)
+    width(width),
+    height(height),
+    title(title)
     {}
 
-    unsigned int m_width, m_height;
-    std::string m_title;
+    WindowProps(const WindowProps& other)
+    :
+    width(other.width),
+    height(other.height),
+    title(other.title)
+    {}
+
+    unsigned int width, height;
+    std::string title;
 };
 
 class Window
@@ -42,19 +49,16 @@ class Window
         Window(const WindowProps& props);
         ~Window();
 
-        bool InitWindow();
+        bool Init();
 
-        inline int GetWidth() const { return m_windowProps.m_width; }
-        inline int GetHeight() const { return m_windowProps.m_height; }
+        inline int GetWidth() const { return m_windowData.width; }
+        inline int GetHeight() const { return m_windowData.height; }
         inline GLFWwindow* GetWindow() const { return m_window; }
 
     private:
         GLFWwindow* m_window = NULL;
 
-        int m_width, m_height;
-        char* m_title;
-
-        WindowProps m_windowProps;
+        WindowProps m_windowData;
 };
 
 #endif
