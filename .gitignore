@@ -33,14 +33,13 @@
 
 # vscode junk
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
 *.code-workspace
-
-# compiled code 
-*.out
+*.json
 
 # other junk
 .DS_STORE
+
+# binaries
+**/bin/
+bin_int/
+build/*

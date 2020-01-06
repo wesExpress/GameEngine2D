@@ -1,7 +1,6 @@
 #ifndef __WINDOW_H__
 #define __WINDOW_H__
 
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <string>
 
@@ -10,16 +9,6 @@
 #define DEFAULT_WINDOW_WIDTH 640
 #define DEFAULT_WINDOW_HEIGHT 480
 #define DEFAULT_WINDOW_TITLE "GLFW_WINDOW"
-
-static void error_callback(int error, const char* description)
-{
-    LOG_ERROR("GLFW Error ({0}): {1}", error, description);
-}
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-}
 
 struct WindowProps
 {
@@ -46,10 +35,13 @@ struct WindowProps
 class Window
 {
     public:
+        Window();
         Window(const WindowProps& props);
         ~Window();
 
-        bool Init();
+        void Create();
+        void Update();
+        void Destroy();
 
         inline int GetWidth() const { return m_windowData.width; }
         inline int GetHeight() const { return m_windowData.height; }
@@ -57,8 +49,11 @@ class Window
 
     private:
         GLFWwindow* m_window = NULL;
-
         WindowProps m_windowData;
+
+        void SetKeyCallback();
+        void SetWindowCloseCallback();
+        void SetWindowResizeCallback();
 };
 
 #endif
