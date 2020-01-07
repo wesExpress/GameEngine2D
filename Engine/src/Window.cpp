@@ -73,7 +73,7 @@ void Window::SetKeyCallback()
     glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
     {
         WindowProps& data = *(WindowProps*)glfwGetWindowUserPointer(window);
-
+        
         switch(action)
         {
             case GLFW_PRESS:
@@ -92,6 +92,8 @@ void Window::SetKeyCallback()
                 break;
             }
         }
+
+        data.EventCallback(e);
     });
 }
 
@@ -100,7 +102,9 @@ void Window::SetWindowCloseCallback()
     glfwSetWindowCloseCallback(m_window, [](GLFWwindow* window)
     {
         WindowProps& data = *(WindowProps*)glfwGetWindowUserPointer(window);
-        WindowEvent e;
+        WindowCloseEvent e;
+
+        data.EventCallback(e);
     });
 };
 
@@ -113,5 +117,7 @@ void Window::SetWindowResizeCallback()
         data.height = height;
 
         WindowResizeEvent e(width, height);
+
+        data.EventCallback(e);
     });
 };

@@ -30,6 +30,7 @@ struct WindowProps
 
     unsigned int width, height;
     std::string title;
+    std::function<void(Event&)> EventCallback;
 };
 
 class Window
@@ -46,6 +47,8 @@ class Window
         inline int GetWidth() const { return m_windowData.width; }
         inline int GetHeight() const { return m_windowData.height; }
         inline GLFWwindow* GetWindow() const { return m_window; }
+
+        inline void SetEventCallback(const std::function<void(Event&)>& callback) { m_windowData.EventCallback = callback; }
 
     private:
         GLFWwindow* m_window = NULL;

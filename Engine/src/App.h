@@ -5,6 +5,7 @@
 
 #include "Logging.h"
 #include "Window.h"
+#include "WindowEvent.h"
 
 class App
 {
@@ -12,10 +13,13 @@ class App
         App();
 
         void Run();
+        void OnEvent(Event& e);
 
     private:
         bool m_isRunning = true;
         std::unique_ptr<Window> m_window;
+
+        void OnWindowCloseEvent(WindowCloseEvent& e);
 };
 
 #endif
