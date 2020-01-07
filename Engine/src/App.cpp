@@ -1,5 +1,4 @@
 #include "App.h"
-#include <GLFW/glfw3.h>
 
 #define BIND_EVENT(x) std::bind(&x, this, std::placeholders::_1)
 
@@ -15,18 +14,20 @@ void App::Run()
 {
     while(m_isRunning)
     {
-        //glClearColor(1, 0, 1, 1);
-        //glClear(GL_COLOR_BUFFER_BIT);
         m_window->Update();
     }
 }
 
 void App::OnEvent(Event& e)
 {
-    LOG_TRACE("{0}", e);
+    LOG_INFO(e.ToString());
+    if (e.GetEventType() == WindowCloseEvent::GetStaticType())
+    {
+        OnWindowCloseEvent();
+    }
 }
 
-void App::OnWindowCloseEvent(WindowCloseEvent& e)
+void App::OnWindowCloseEvent()
 {
     m_isRunning = false;
 }

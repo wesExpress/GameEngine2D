@@ -5,6 +5,7 @@
 #include <string>
 
 #include "Logging.h"
+#include "Event/Event.h"
 
 #define DEFAULT_WINDOW_WIDTH 640
 #define DEFAULT_WINDOW_HEIGHT 480
@@ -57,6 +58,9 @@ class Window
         void SetKeyCallback();
         void SetWindowCloseCallback();
         void SetWindowResizeCallback();
+        void SetMouseButtonCallback();
+        void SetMouseMoveCallback();
+        void SetMouseScrollCallback();
 };
 
 #endif

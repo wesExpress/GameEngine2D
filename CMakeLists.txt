@@ -6,8 +6,8 @@ set (CMAKE_CXX_STANDARD 17)
 # headers
 include_directories(Engine/vendor/include)
 
-set (PROJECT_LINK_LIBS libspdlog.a libglfw.dylib)
 link_directories(Engine/vendor/lib)
+set (PROJECT_LINK_LIBS libspdlog.a libglfw.3.dylib)
 
 # source code
 file(GLOB SOURCES "Engine/src/*.cpp")

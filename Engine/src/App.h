@@ -19,7 +19,7 @@ class App
         bool m_isRunning = true;
         std::unique_ptr<Window> m_window;
 
-        void OnWindowCloseEvent(WindowCloseEvent& e);
+        void OnWindowCloseEvent();
 };
 
 #endif
