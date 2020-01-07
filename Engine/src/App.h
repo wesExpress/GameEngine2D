@@ -5,7 +5,7 @@
 
 #include "Logging.h"
 #include "Window.h"
-#include "WindowEvent.h"
+#include "Event/WindowEvent.h"
 
 class App
 {

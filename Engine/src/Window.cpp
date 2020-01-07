@@ -79,21 +79,22 @@ void Window::SetKeyCallback()
             case GLFW_PRESS:
             {
                 KeyPressedEvent e;
+                data.EventCallback(e);
                 break;
             }
             case GLFW_REPEAT:
             {
                 KeyPressedEvent e;
+                data.EventCallback(e);
                 break;
             }
             case GLFW_RELEASE:
             {
                 KeyReleasedEvent e;
+                data.EventCallback(e);
                 break;
             }
         }
-
-        data.EventCallback(e);
     });
 }
 
