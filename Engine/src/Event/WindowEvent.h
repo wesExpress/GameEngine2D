@@ -2,7 +2,6 @@
 #define __WINDOWEVENT_H__
 
 #include "Event.h"
-#include <sstream>
 
 class WindowCloseEvent : public Event
 {

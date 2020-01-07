@@ -1,7 +1,6 @@
 #ifndef __KEYBOARDEVENT_H__
 #define __KEYBOARDEVENT_H__
 
-#include <sstream>
 #include "Event.h"
 
 class KeyboardEvent : public Event

@@ -2,7 +2,6 @@
 #define __MOUSEEVENT_H__
 
 #include "Event.h"
-#include <sstream>
 
 class MouseMovedEvent : public Event
 {

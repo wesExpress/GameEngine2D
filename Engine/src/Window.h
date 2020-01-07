@@ -2,7 +2,6 @@
 #define __WINDOW_H__
 
 #include <GLFW/glfw3.h>
-#include <string>
 
 #include "Logging.h"
 #include "Event/Event.h"

@@ -1,7 +1,6 @@
 #ifndef __LOGGING_H__
 #define __LOGGING_H__
 
-#include <memory>
 #include "spdlog/spdlog.h"
 
 class Log

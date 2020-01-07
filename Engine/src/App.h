@@ -1,8 +1,6 @@
 #ifndef __APP_H__
 #define __APP_H__
 
-#include <memory>
-
 #include "Logging.h"
 #include "Window.h"
 #include "Event/WindowEvent.h"
