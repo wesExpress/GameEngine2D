@@ -8,7 +8,7 @@
 
 #define DEFAULT_WINDOW_WIDTH 640
 #define DEFAULT_WINDOW_HEIGHT 480
-#define DEFAULT_WINDOW_TITLE "GLFW_WINDOW"
+#define DEFAULT_WINDOW_TITLE "GameEngine2D"
 
 struct WindowProps
 {

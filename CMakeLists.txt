@@ -14,4 +14,4 @@ file(GLOB SOURCES "Engine/src/*.cpp")
 
 add_executable(GameEngine2D ${SOURCES})
 target_link_libraries(GameEngine2D ${PROJECT_LINK_LIBS})
-target_precompile_headers(GameEngine2D PRIVATE Engine/src/EnginePCH.h)
+target_precompile_headers(GameEngine2D PRIVATE Engine/EnginePCH.h)
