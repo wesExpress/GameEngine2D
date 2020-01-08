@@ -50,16 +50,25 @@ void Window::Create()
             m_windowData.title);
 
             glfwMakeContextCurrent(m_window);
-            glfwSetWindowUserPointer(m_window, &m_windowData);
+            if(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+            {
+                LOG_INFO("GLAD initialized.");
 
-            // GLFW callbacks
-            glfwSetErrorCallback(SetGLFWErrorCallback);
-            SetKeyCallback();
-            SetWindowCloseCallback();
-            SetWindowResizeCallback();
-            SetMouseButtonCallback();
-            SetMouseMoveCallback();
-            SetMouseScrollCallback();
+                glfwSetWindowUserPointer(m_window, &m_windowData);
+
+                // GLFW callbacks
+                glfwSetErrorCallback(SetGLFWErrorCallback);
+                SetKeyCallback();
+                SetWindowCloseCallback();
+                SetWindowResizeCallback();
+                SetMouseButtonCallback();
+                SetMouseMoveCallback();
+                SetMouseScrollCallback();
+            }
+            else
+            {
+                LOG_ERROR("GLAD failed to initialze!");
+            }
         }
     }
 }

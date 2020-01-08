@@ -1,6 +1,7 @@
 #ifndef __WINDOW_H__
 #define __WINDOW_H__
 
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include "Logging.h"

@@ -4,7 +4,7 @@ LayerStack::~LayerStack()
 {
     for (Layer* layer : m_layers)
     {
-        layer->Detach();
+        layer->OnDetach();
         delete layer;
     }
 }
@@ -25,7 +25,7 @@ void LayerStack::PopLayer(Layer* layer)
     auto it = std::find(m_layers.begin(), m_layers.begin() + m_insertIndex, layer);
     if (it != m_layers.begin() + m_insertIndex)
     {
-        layer->Detach();
+        layer->OnDetach();
         m_layers.erase(it);
         m_insertIndex--;
     }
@@ -36,7 +36,7 @@ void LayerStack::PopOverlay(Layer* layer)
     auto it = std::find(m_layers.begin() + m_insertIndex, m_layers.end(), layer);
     if (it != m_layers.end())
     {
-        layer->Detach();
+        layer->OnDetach();
         m_layers.erase(it);
     }
 }

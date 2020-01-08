@@ -34,6 +34,34 @@ class Event
         virtual std::string ToString() const { return GetName(); }
 
         inline bool InCategory(EventCategory category) { return GetCategoryFlags() & category; }
+
+        bool handled = false;
+};
+
+class EventDispatcher
+{
+    template<typename T>
+    using EventFn = std::function<bool(T&)>;
+
+    public:
+        EventDispatcher(Event& e)
+        :
+        m_event(e)
+        {}
+        
+        template<typename T>
+        bool Dispatch(EventFn<T> function)
+        {
+            if (m_event.GetEventType() == T::GetStaticType())
+            {
+                m_event.handled = function(*(T*)&m_event);
+                return true;
+            }
+            return false;
+        }
+
+    private:
+        Event& m_event;
 };
 
 inline std::ostream& operator<<(std::ostream& os, const Event& e)

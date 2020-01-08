@@ -10,8 +10,9 @@ class Layer
 
         virtual ~Layer() = default;
 
-        virtual void Attach() = 0;
-        virtual void Detach() = 0;
+        virtual void OnUpdate() = 0;
+        virtual void OnAttach() = 0;
+        virtual void OnDetach() = 0;
         virtual void OnEvent(Event& e) = 0;
 
         inline const std::string& GetName() const { return m_logName; }
