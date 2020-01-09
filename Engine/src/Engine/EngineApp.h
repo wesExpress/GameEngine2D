@@ -7,10 +7,10 @@
 #include "Event/WindowEvent.h"
 #include "LayerStack.h"
 
-class App
+class EngineApp
 {
     public:
-        App();
+        EngineApp();
 
         void Run();
         void OnEvent(Event& e);
@@ -19,7 +19,7 @@ class App
         void PushOverlay(Layer* layer);
 
         inline Window& GetWindow() const { return *m_window; }
-        static App& Get() {return *m_instance; };
+        static EngineApp& Get() {return *m_instance; };
 
     private:
         bool OnWindowCloseEvent(WindowCloseEvent& e);
@@ -27,7 +27,7 @@ class App
         bool m_isRunning = true;
         std::unique_ptr<Window> m_window;
         LayerStack m_layerStack;      
-        static App* m_instance;
+        static EngineApp* m_instance;
 };
 
 #endif

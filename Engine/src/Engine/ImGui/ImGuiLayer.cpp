@@ -2,7 +2,7 @@
 #include "imgui/imgui.h"
 #include "OpenGL/ImGuiOpenGLRenderer.h"
 
-#include "App.h"
+#include "EngineApp.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -49,7 +49,7 @@ void ImGuiLayer::OnAttach()
 
     ImGui_ImplOpenGL3_Init("#version 330");
 
-    App& app = App::Get();
+    EngineApp& app = EngineApp::Get();
     io.DisplaySize.x = app.GetWindow().GetWidth();
     io.DisplaySize.y = app.GetWindow().GetHeight();
     glViewport(0, 0, app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
@@ -66,7 +66,7 @@ void ImGuiLayer::OnUpdate()
     ImGui::NewFrame();
 
     ImGuiIO& io = ImGui::GetIO();
-    App& app = App::Get();
+    EngineApp& app = EngineApp::Get();
     io.DisplaySize.x = app.GetWindow().GetWidth();
     io.DisplaySize.y = app.GetWindow().GetHeight();
     glViewport(0, 0, app.GetWindow().GetWidth(), app.GetWindow().GetHeight());

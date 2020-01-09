@@ -1,4 +1,4 @@
-#include "App.h"
+#include "EngineApp.h"
 #include "Event/WindowEvent.h"
 #include "ImGui/ImGuiLayer.h"
 
@@ -6,9 +6,9 @@
 
 #define BIND_FN(x) std::bind(&x, this, std::placeholders::_1)
 
-App* App::m_instance = nullptr;
+EngineApp* EngineApp::m_instance = nullptr;
 
-App::App()
+EngineApp::EngineApp()
 {
     if (m_instance != nullptr)
     {
@@ -20,12 +20,10 @@ App::App()
     }
     
     m_window = std::unique_ptr<Window>(Window::Create());
-    m_window->SetEventCallback(BIND_FN(App::OnEvent));
-
-    PushOverlay(new ImGuiLayer());
+    m_window->SetEventCallback(BIND_FN(EngineApp::OnEvent));
 }
 
-void App::Run()
+void EngineApp::Run()
 {
     while(m_isRunning)
     {
@@ -41,13 +39,13 @@ void App::Run()
     }
 }
 
-void App::OnEvent(Event& e)
+void EngineApp::OnEvent(Event& e)
 {
     EventDispatcher dispatcher(e);
 
     LOG_INFO(e.ToString());
 
-    dispatcher.Dispatch<WindowCloseEvent>(BIND_FN(App::OnWindowCloseEvent));
+    dispatcher.Dispatch<WindowCloseEvent>(BIND_FN(EngineApp::OnWindowCloseEvent));
 
     for(auto it = m_layerStack.end(); it != m_layerStack.begin(); )
     {
@@ -59,19 +57,19 @@ void App::OnEvent(Event& e)
     }
 }
 
-void App::PushLayer(Layer* layer)
+void EngineApp::PushLayer(Layer* layer)
 {
     m_layerStack.PushLayer(layer);
     layer->OnAttach();
 }
 
-void App::PushOverlay(Layer* layer)
+void EngineApp::PushOverlay(Layer* layer)
 {
     m_layerStack.PushOverlay(layer);
     layer->OnAttach();
 }
 
-bool App::OnWindowCloseEvent(WindowCloseEvent& e)
+bool EngineApp::OnWindowCloseEvent(WindowCloseEvent& e)
 {
     m_isRunning = false;
     return true;
