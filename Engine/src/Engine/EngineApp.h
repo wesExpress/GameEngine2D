@@ -1,5 +1,5 @@
-#ifndef __APP_H__
-#define __APP_H__
+#ifndef __ENGINEAPP_H__
+#define __ENGINEAPP_H__
 
 #include "Logging.h"
 #include "Window.h"
