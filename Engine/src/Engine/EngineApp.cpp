@@ -43,7 +43,7 @@ void EngineApp::OnEvent(Event& e)
 {
     EventDispatcher dispatcher(e);
 
-    LOG_INFO(e.ToString());
+    //LOG_INFO(e.ToString());
 
     dispatcher.Dispatch<WindowCloseEvent>(BIND_FN(EngineApp::OnWindowCloseEvent));
 

@@ -103,7 +103,7 @@ bool ImGuiLayer::OnMouseMoved(MouseMovedEvent& e)
     io.MousePos.x = (float)e.GetMouseX();
     io.MousePos.y = (float)e.GetMouseY();
 
-    LOG_WARN("ImGui MouseMovedEvent: ({0}, {1})", io.MousePos.x, io.MousePos.y);
+    //LOG_WARN("ImGui MouseMovedEvent: ({0}, {1})", io.MousePos.x, io.MousePos.y);
 
     return false;
 }
@@ -115,7 +115,7 @@ bool ImGuiLayer::OnMouseScrolled(MouseScrolledEvent& e)
     io.MouseWheelH += (float)e.GetXDiff();
     io.MouseWheel += (float)e.GetYDiff();
 
-    LOG_WARN("ImGui MouseScrolledEvent: ({0}, {1})", io.MouseWheelH, io.MouseWheel);
+    //LOG_WARN("ImGui MouseScrolledEvent: ({0}, {1})", io.MouseWheelH, io.MouseWheel);
 
     return false;
 }
@@ -126,7 +126,7 @@ bool ImGuiLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
 
     io.MouseDown[e.GetButton()] = true;
 
-    LOG_WARN("ImGui MouseButtonPressedEvent: {0}", e.GetButton());
+    //LOG_WARN("ImGui MouseButtonPressedEvent: {0}", e.GetButton());
 
     return false;
 }
@@ -137,7 +137,7 @@ bool ImGuiLayer::OnMouseButtonReleased(MouseButtonReleasedEvent& e)
 
     io.MouseDown[e.GetButton()] = false;
 
-    LOG_WARN("ImGui MouseButtonReleasedEvent: {0}", e.GetButton());
+    //LOG_WARN("ImGui MouseButtonReleasedEvent: {0}", e.GetButton());
 
     return false;
 }
@@ -153,7 +153,7 @@ bool ImGuiLayer::OnKeyPressed(KeyPressedEvent& e)
     io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
     io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
 
-    LOG_WARN("ImGui MouseButtonPressedEvent: {0}", e.GetKeyCode());
+    //LOG_WARN("ImGui MouseButtonPressedEvent: {0}", e.GetKeyCode());
 
     return false;
 }
@@ -164,7 +164,7 @@ bool ImGuiLayer::OnKeyReleased(KeyReleasedEvent& e)
 
     io.KeysDown[e.GetKeyCode()] = false;
 
-    LOG_WARN("ImGui MouseButtonReleasedEvent: {0}", e.GetKeyCode());
+    //LOG_WARN("ImGui MouseButtonReleasedEvent: {0}", e.GetKeyCode());
 
     return false;
 }
@@ -175,7 +175,7 @@ bool ImGuiLayer::OnKeyTyped(KeyTypedEvent& e)
 
     io.AddInputCharacter(e.GetKeyCode());
 
-    LOG_WARN("ImGui KeyTypedEvent: {0}", e.GetKeyCode());
+    //LOG_WARN("ImGui KeyTypedEvent: {0}", e.GetKeyCode());
 
     return false;
 }
@@ -191,7 +191,7 @@ bool ImGuiLayer::OnWindowResize(WindowResizeEvent& e)
     io.DisplayFramebufferScale.y = 1.0f;
     glViewport(0, 0, e.GetWidth(), e.GetHeight());
 
-    LOG_WARN("ImGui WindowResizeEvent");
+    //LOG_WARN("ImGui WindowResizeEvent");
 
     return false;
 }
