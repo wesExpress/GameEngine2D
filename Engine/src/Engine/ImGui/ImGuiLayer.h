@@ -8,29 +8,32 @@
 #include "Event/MouseEvent.h"
 #include "Event/WindowEvent.h"
 
-class ImGuiLayer : public Layer
+namespace Engine
 {
-    public:
-        ImGuiLayer();
-        ~ImGuiLayer() = default;
+    class ImGuiLayer : public Layer
+    {
+        public:
+            ImGuiLayer();
+            ~ImGuiLayer() = default;
 
-        void OnUpdate() override;
-        void OnAttach() override;
-        void OnDetach() override;
-        void OnEvent(Event& e) override;
-    private:
-        bool OnMouseMoved(MouseMovedEvent& e);
-        bool OnMouseScrolled(MouseScrolledEvent& e);
-        bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
-        bool OnMouseButtonReleased(MouseButtonReleasedEvent& e);
+            void OnUpdate() override;
+            void OnAttach() override;
+            void OnDetach() override;
+            void OnEvent(Event& e) override;
+        private:
+            bool OnMouseMoved(MouseMovedEvent& e);
+            bool OnMouseScrolled(MouseScrolledEvent& e);
+            bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
+            bool OnMouseButtonReleased(MouseButtonReleasedEvent& e);
 
-        bool OnKeyPressed(KeyPressedEvent& e);
-        bool OnKeyReleased(KeyReleasedEvent& e);
-        bool OnKeyTyped(KeyTypedEvent& e);
-        
-        bool OnWindowResize(WindowResizeEvent& e);
-    private:
-        float m_time = 0.0f;
-};
+            bool OnKeyPressed(KeyPressedEvent& e);
+            bool OnKeyReleased(KeyReleasedEvent& e);
+            bool OnKeyTyped(KeyTypedEvent& e);
+            
+            bool OnWindowResize(WindowResizeEvent& e);
+        private:
+            float m_time = 0.0f;
+    };
+}
 
 #endif

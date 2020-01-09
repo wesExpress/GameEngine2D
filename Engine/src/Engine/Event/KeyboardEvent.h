@@ -3,74 +3,77 @@
 
 #include "Event.h"
 
-class KeyboardEvent : public Event
+namespace Engine
 {
-    protected:
-        KeyboardEvent(int keyCode)
-        :
-        m_keyCode(keyCode)
-        {}
+    class KeyboardEvent : public Event
+    {
+        protected:
+            KeyboardEvent(int keyCode)
+            :
+            m_keyCode(keyCode)
+            {}
 
-    public:
-        unsigned int GetKeyCode() const { return m_keyCode; }
-        EVENT_CATEGORY(INPUT | KEYBOARD);
+        public:
+            unsigned int GetKeyCode() const { return m_keyCode; }
+            EVENT_CATEGORY(INPUT | KEYBOARD);
 
-    private:
-        unsigned int m_keyCode;
-};
+        private:
+            unsigned int m_keyCode;
+    };
 
-class KeyPressedEvent : public KeyboardEvent
-{
-    public:
-        KeyPressedEvent(int key)
-        :
-        KeyboardEvent(key)
-        {}
+    class KeyPressedEvent : public KeyboardEvent
+    {
+        public:
+            KeyPressedEvent(int key)
+            :
+            KeyboardEvent(key)
+            {}
 
-        std::string ToString() const override
-        {
-            std::stringstream ss;
-            ss << "KeyPressedEvent: " << GetKeyCode();
-            return ss.str();
-        }
+            std::string ToString() const override
+            {
+                std::stringstream ss;
+                ss << "KeyPressedEvent: " << GetKeyCode();
+                return ss.str();
+            }
 
-        EVENT_TYPE(KeyPressed);
-};
+            EVENT_TYPE(KeyPressed);
+    };
 
-class KeyReleasedEvent : public KeyboardEvent
-{
-    public:
-        KeyReleasedEvent(int key)
-        :
-        KeyboardEvent(key)
-        {}
-        
-        std::string ToString() const override
-        {
-            std::stringstream ss;
-            ss << "KeyReleasedEvent: " << GetKeyCode();
-            return ss.str();
-        }
+    class KeyReleasedEvent : public KeyboardEvent
+    {
+        public:
+            KeyReleasedEvent(int key)
+            :
+            KeyboardEvent(key)
+            {}
+            
+            std::string ToString() const override
+            {
+                std::stringstream ss;
+                ss << "KeyReleasedEvent: " << GetKeyCode();
+                return ss.str();
+            }
 
-        EVENT_TYPE(KeyReleased);
-}; 
+            EVENT_TYPE(KeyReleased);
+    }; 
 
-class KeyTypedEvent : public KeyboardEvent
-{
-    public:
-        KeyTypedEvent(int key)
-        :
-        KeyboardEvent(key)
-        {}
-        
-        std::string ToString() const override
-        {
-            std::stringstream ss;
-            ss << "KeyTypedEvent: " << GetKeyCode();
-            return ss.str();
-        }
+    class KeyTypedEvent : public KeyboardEvent
+    {
+        public:
+            KeyTypedEvent(int key)
+            :
+            KeyboardEvent(key)
+            {}
+            
+            std::string ToString() const override
+            {
+                std::stringstream ss;
+                ss << "KeyTypedEvent: " << GetKeyCode();
+                return ss.str();
+            }
 
-        EVENT_TYPE(KeyTyped);
-}; 
+            EVENT_TYPE(KeyTyped);
+    }; 
+}
 
 #endif

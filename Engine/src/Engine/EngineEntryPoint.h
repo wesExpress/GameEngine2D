@@ -4,13 +4,13 @@
 #include "EngineApp.h"
 #include "Logging.h"
 
-extern EngineApp* CreateApplication();
+extern Engine::EngineApp* Engine::CreateApplication();
 
 int main(int argc, char** argv)
 {
-    Log::Init();
+    Engine::Log::Init();
     
-    auto app = CreateApplication();
+    auto app = Engine::CreateApplication();
     app->Run();
     delete app;
     

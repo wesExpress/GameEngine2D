@@ -6,71 +6,74 @@
 
 #define BIND_FN(x) std::bind(&x, this, std::placeholders::_1)
 
-EngineApp* EngineApp::m_instance = nullptr;
-
-EngineApp::EngineApp()
+namespace Engine
 {
-    if (m_instance != nullptr)
-    {
-        LOG_ERROR("App already exists!");
-    }
-    else
-    {
-        m_instance = this;
-    }
-    
-    m_window = std::unique_ptr<Window>(Window::Create());
-    m_window->SetEventCallback(BIND_FN(EngineApp::OnEvent));
-}
+    EngineApp* EngineApp::m_instance = nullptr;
 
-void EngineApp::Run()
-{
-    while(m_isRunning)
+    EngineApp::EngineApp()
     {
-        glClearColor(1, 0, 1, 1);
-        glClear(GL_COLOR_BUFFER_BIT);
+        if (m_instance != nullptr)
+        {
+            ENGINE_ERROR("App already exists!");
+        }
+        else
+        {
+            m_instance = this;
+        }
         
-        for (Layer* layer : m_layerStack)
-        {
-            layer->OnUpdate();
-        }
-
-        m_window->Update();
+        m_window = std::unique_ptr<Window>(Window::Create());
+        m_window->SetEventCallback(BIND_FN(EngineApp::OnEvent));
     }
-}
 
-void EngineApp::OnEvent(Event& e)
-{
-    EventDispatcher dispatcher(e);
-
-    //LOG_INFO(e.ToString());
-
-    dispatcher.Dispatch<WindowCloseEvent>(BIND_FN(EngineApp::OnWindowCloseEvent));
-
-    for(auto it = m_layerStack.end(); it != m_layerStack.begin(); )
+    void EngineApp::Run()
     {
-        (*--it)->OnEvent(e);
-        if (e.handled)
+        while(m_isRunning)
         {
-            break;
+            glClearColor(1, 0, 1, 1);
+            glClear(GL_COLOR_BUFFER_BIT);
+            
+            for (Layer* layer : m_layerStack)
+            {
+                layer->OnUpdate();
+            }
+
+            m_window->Update();
         }
     }
-}
 
-void EngineApp::PushLayer(Layer* layer)
-{
-    m_layerStack.PushLayer(layer);
-    layer->OnAttach();
-}
+    void EngineApp::OnEvent(Event& e)
+    {
+        EventDispatcher dispatcher(e);
 
-void EngineApp::PushOverlay(Layer* layer)
-{
-    m_layerStack.PushOverlay(layer);
-    layer->OnAttach();
-}
+        //ENGINE_INFO(e.ToString());
 
-bool EngineApp::OnWindowCloseEvent(WindowCloseEvent& e)
-{
-    m_isRunning = false;
-    return true;
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_FN(EngineApp::OnWindowCloseEvent));
+
+        for(auto it = m_layerStack.end(); it != m_layerStack.begin(); )
+        {
+            (*--it)->OnEvent(e);
+            if (e.handled)
+            {
+                break;
+            }
+        }
+    }
+
+    void EngineApp::PushLayer(Layer* layer)
+    {
+        m_layerStack.PushLayer(layer);
+        layer->OnAttach();
+    }
+
+    void EngineApp::PushOverlay(Layer* layer)
+    {
+        m_layerStack.PushOverlay(layer);
+        layer->OnAttach();
+    }
+
+    bool EngineApp::OnWindowCloseEvent(WindowCloseEvent& e)
+    {
+        m_isRunning = false;
+        return true;
+    }
 }

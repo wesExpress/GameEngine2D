@@ -1,12 +1,12 @@
 #include <Engine.h>
 #include <Engine/EngineEntryPoint.h>
 
-class Application : public EngineApp
+class Application : public Engine::EngineApp
 {
     public:
         Application()
         {
-            PushOverlay(new ImGuiLayer());
+            PushOverlay(new Engine::ImGuiLayer());
         }
 
         ~Application()
@@ -15,7 +15,7 @@ class Application : public EngineApp
         }
 }; 
 
-EngineApp* CreateApplication()
+Engine::EngineApp* Engine::CreateApplication()
 {
     return new Application();
 }
