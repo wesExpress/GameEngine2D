@@ -1,12 +1,18 @@
 # GameEngine2D #
 
 # CMake #
-requires version 3.0
+requires version 3.6
 
-To properly compile, navigate to build/ and simply run cmake. Then run make.
+### compilng ###
+navigate to build/ and run 
+```
+cmake ..
+make
+```
+
+This will generate an application in build/Application
 
 To clean all the junk in build, run: 
 ```
-rm -rf build/* 
+rm -rf * 
 ```
-from the main directory.
