@@ -19,7 +19,7 @@ file(GLOB
 
 # library creation
 add_library(GameEngine2D 
-    SHARED 
+    STATIC 
         ${SOURCES}
 )
 target_link_libraries(GameEngine2D  
