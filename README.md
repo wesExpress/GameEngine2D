@@ -1,4 +1,5 @@
 # GameEngine2D #
+Creating a 2D game engine by following along with development of the [Hazel game engine.](https://github.com/TheCherno/Hazel)
 
 # CMake #
 requires version 3.6
