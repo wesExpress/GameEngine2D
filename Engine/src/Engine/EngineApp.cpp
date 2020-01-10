@@ -1,6 +1,5 @@
 #include "EngineApp.h"
 #include "Event/WindowEvent.h"
-#include "ImGui/ImGuiLayer.h"
 #include "Input.h"
 
 #include <glad/glad.h>
@@ -24,6 +23,9 @@ namespace Engine
         
         m_window = std::unique_ptr<Window>(Window::Create());
         m_window->SetEventCallback(BIND_FN(EngineApp::OnEvent));
+
+        m_imguiLayer = new ImGuiLayer();
+        PushOverlay(m_imguiLayer);
     }
 
     void EngineApp::Run()
@@ -37,6 +39,13 @@ namespace Engine
             {
                 layer->OnUpdate();
             }
+
+            m_imguiLayer->Begin();
+            for (Layer* layer : m_layerStack)
+            {
+                layer->OnImGuiRender();
+            }
+            m_imguiLayer->End();
 
             m_window->Update();
         }

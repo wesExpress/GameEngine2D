@@ -6,4 +6,7 @@ namespace Engine
     :
     m_logName(name)
     {}
+
+    Layer::~Layer()
+    {}
 }

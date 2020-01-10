@@ -1,4 +1,5 @@
 #include <Engine.h>
+#include "imgui.h"
 
 class TestLayer : public Engine::Layer
 {
@@ -8,12 +9,15 @@ class TestLayer : public Engine::Layer
         Engine::Layer("Test Layer")
         {}
 
-        void OnUpdate() override
+        virtual void OnUpdate() override
         {
-            if(Engine::Input::IsMouseButtonPressed(MOUSE_BUTTON_1))
-            {
-                CLIENT_INFO("Mouse clicked.");
-            }
+        }
+
+        virtual void OnImGuiRender() override
+        {
+            //ImGui::Begin("Test");
+            //ImGui::Text("Text");
+            //ImGui::End();
         }
 };
 
@@ -23,7 +27,6 @@ class Application : public Engine::EngineApp
         Application()
         {
             PushLayer(new TestLayer());
-            PushOverlay(new Engine::ImGuiLayer());
         }
 
         ~Application()

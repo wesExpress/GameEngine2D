@@ -3,34 +3,20 @@
 
 #include "Layer.h"
 
-#include "Event/Event.h"
-#include "Event/KeyboardEvent.h"
-#include "Event/MouseEvent.h"
-#include "Event/WindowEvent.h"
-
 namespace Engine
 {
     class ImGuiLayer : public Layer
     {
         public:
             ImGuiLayer();
-            ~ImGuiLayer() = default;
+            ~ImGuiLayer();
 
-            void OnUpdate() override;
-            void OnAttach() override;
-            void OnDetach() override;
-            void OnEvent(Event& e) override;
-        private:
-            bool OnMouseMoved(MouseMovedEvent& e);
-            bool OnMouseScrolled(MouseScrolledEvent& e);
-            bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
-            bool OnMouseButtonReleased(MouseButtonReleasedEvent& e);
+            virtual void OnAttach() override;
+            virtual void OnDetach() override;
+            virtual void OnImGuiRender() override;
 
-            bool OnKeyPressed(KeyPressedEvent& e);
-            bool OnKeyReleased(KeyReleasedEvent& e);
-            bool OnKeyTyped(KeyTypedEvent& e);
-            
-            bool OnWindowResize(WindowResizeEvent& e);
+            void Begin();
+            void End();
         private:
             float m_time = 0.0f;
     };

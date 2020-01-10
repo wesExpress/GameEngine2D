@@ -38,11 +38,12 @@ target_include_directories(GameEngine2D
         src/Engine 
         src/Platform
 
+        vendor/imgui
         vendor/glm
 
     PRIVATE
         vendor/spdlog/include
         vendor/GLFW/include
         vendor/glad/include
-        vendor  
+        
 )
