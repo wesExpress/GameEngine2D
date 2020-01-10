@@ -1,5 +1,9 @@
 project (GameEngine2D)
-add_subdirectory(vendor/include/glad)
+
+# add sub directories for projects with cmake support (currently glad, spdlog, GLFW)
+add_subdirectory(vendor/glad)
+add_subdirectory(vendor/spdlog)
+add_subdirectory(vendor/GLFW)
 
 # source code
 file(GLOB 
@@ -8,19 +12,21 @@ file(GLOB
         src/Engine/ImGui/*.cpp 
         src/Platform/OpenGL/*.cpp 
         src/Platform/GLFW/*.cpp 
-        vendor/include/imgui/*.cpp
+
+        # must compile and link imgui directly to project
+        vendor/imgui/*.cpp
 )
 
 # library creation
 add_library(GameEngine2D 
-    STATIC 
+    SHARED 
         ${SOURCES}
 )
 target_link_libraries(GameEngine2D  
-    PUBLIC
+    PRIVATE
         GLAD
-        libspdlog.a
-        glfw.3.dylib
+        GLFW
+        spdlog
 )
 target_precompile_headers(GameEngine2D 
     PUBLIC 
@@ -31,6 +37,12 @@ target_include_directories(GameEngine2D
         src 
         src/Engine 
         src/Platform
-        vendor/include        
-        vendor/include/glad/include
+
+        vendor/glm
+
+    PRIVATE
+        vendor/spdlog/include
+        vendor/GLFW/include
+        vendor/glad/include
+        vendor  
 )
