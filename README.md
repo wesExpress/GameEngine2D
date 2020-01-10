@@ -4,8 +4,8 @@ Creating a 2D game engine by following along with development of the [Hazel game
 # CMake #
 requires version 3.6
 
-### compilng ###
-navigate to **build/** and run 
+### Compilng and building ###
+Create and navigate to **build/**, run 
 ```
 cmake ..
 make
