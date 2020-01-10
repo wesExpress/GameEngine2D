@@ -7,7 +7,7 @@ file(GLOB
         src/Engine/*.cpp 
         src/Engine/ImGui/*.cpp 
         src/Platform/OpenGL/*.cpp 
-        src/Platform/Window/*.cpp 
+        src/Platform/GLFW/*.cpp 
         vendor/include/imgui/*.cpp
 )
 

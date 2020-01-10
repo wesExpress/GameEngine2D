@@ -16,16 +16,16 @@ namespace Engine
             static std::shared_ptr<spdlog::logger> m_engineLogger;
             static std::shared_ptr<spdlog::logger> m_clientLogger;
     };
-
-    #define ENGINE_TRACE(...) Log::GetEngineLogger()->trace(__VA_ARGS__)
-    #define ENGINE_INFO(...) Log::GetEngineLogger()->info(__VA_ARGS__)
-    #define ENGINE_WARN(...) Log::GetEngineLogger()->warn(__VA_ARGS__)
-    #define ENGINE_ERROR(...) Log::GetEngineLogger()->error(__VA_ARGS__)
-
-    #define CLIENT_TRACE(...) Log::GetClientLogger()->trace(__VA_ARGS__)
-    #define CLIENT_INFO(...) Log::GetClientLogger()->info(__VA_ARGS__)
-    #define CLIENT_WARN(...) Log::GetClientLogger()->warn(__VA_ARGS__)
-    #define CLIENT_ERROR(...) Log::GetClientLogger()->error(__VA_ARGS__)
 }
+
+#define ENGINE_TRACE(...) Engine::Log::GetEngineLogger()->trace(__VA_ARGS__)
+#define ENGINE_INFO(...) Engine::Log::GetEngineLogger()->info(__VA_ARGS__)
+#define ENGINE_WARN(...) Engine::Log::GetEngineLogger()->warn(__VA_ARGS__)
+#define ENGINE_ERROR(...) Engine::Log::GetEngineLogger()->error(__VA_ARGS__)
+
+#define CLIENT_TRACE(...) Engine::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define CLIENT_INFO(...) Engine::Log::GetClientLogger()->info(__VA_ARGS__)
+#define CLIENT_WARN(...) Engine::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define CLIENT_ERROR(...) Engine::Log::GetClientLogger()->error(__VA_ARGS__)
 
 #endif
