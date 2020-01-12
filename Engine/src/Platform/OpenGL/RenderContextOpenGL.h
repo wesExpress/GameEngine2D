@@ -1,6 +1,9 @@
 #ifndef __OPENGLCONTEXT_H__
 #define __OPENGLCONTEXT_H__
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include "Rendering/RenderContext.h"
 
 struct GLFWwindow;

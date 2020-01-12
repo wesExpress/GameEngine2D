@@ -1,9 +1,6 @@
 #include "OpenGL/RenderContextOpenGL.h"
 #include "Logging.h"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 namespace Engine
 {
     RenderContextOpenGL::RenderContextOpenGL(GLFWwindow* windowHandle)
