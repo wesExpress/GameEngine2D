@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "Logging.h"
 #include "Event/Event.h"
+#include "Rendering/RenderContext.h"
 
 struct GLFWwindow;
 
@@ -25,8 +26,9 @@ namespace Engine
             inline void SetEventCallback(const std::function<void(Event&)>& callback) override { m_windowData.EventCallback = callback; }
 
         private:
-            GLFWwindow* m_window = NULL;
+            GLFWwindow* m_window = nullptr;
             WindowProps m_windowData;
+            RenderContext* m_renderContext = nullptr;
 
             void Init(const WindowProps& props);
 

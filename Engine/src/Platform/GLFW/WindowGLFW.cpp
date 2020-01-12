@@ -2,9 +2,7 @@
 #include "Event/KeyboardEvent.h"
 #include "Event/WindowEvent.h"
 #include "Event/MouseEvent.h"
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "Platform/OpenGL/RenderContextOpenGL.h"
 
 namespace Engine
 {
@@ -64,27 +62,20 @@ namespace Engine
                 m_windowData.height, 
                 m_windowData.title);
 
-                glfwMakeContextCurrent(m_window);
-                if(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-                {
-                    ENGINE_INFO("GLAD initialized.");
+                m_renderContext = new RenderContextOpenGL(m_window);
+                m_renderContext->Init();
 
-                    glfwSetWindowUserPointer(m_window, &m_windowData);
+                glfwSetWindowUserPointer(m_window, &m_windowData);
 
-                    // GLFW callbacks
-                    glfwSetErrorCallback(SetGLFWErrorCallback);
-                    SetKeyCallback();
-                    SetCharCallback();
-                    SetWindowCloseCallback();
-                    SetWindowResizeCallback();
-                    SetMouseButtonCallback();
-                    SetMouseMoveCallback();
-                    SetMouseScrollCallback();
-                }
-                else
-                {
-                    ENGINE_ERROR("GLAD failed to initialze!");
-                }
+                // GLFW callbacks
+                glfwSetErrorCallback(SetGLFWErrorCallback);
+                SetKeyCallback();
+                SetCharCallback();
+                SetWindowCloseCallback();
+                SetWindowResizeCallback();
+                SetMouseButtonCallback();
+                SetMouseMoveCallback();
+                SetMouseScrollCallback();
             }
         }
     }
@@ -92,7 +83,7 @@ namespace Engine
     void WindowGLFW::Update()
     {
         glfwPollEvents();
-        glfwSwapBuffers(m_window);
+        m_renderContext->SwapBuffers();
     }
 
     void WindowGLFW::Destroy()
