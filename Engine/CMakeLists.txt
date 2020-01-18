@@ -9,6 +9,7 @@ add_subdirectory(vendor/GLFW)
 file(GLOB 
     SOURCES 
         src/Engine/*.cpp 
+        src/Engine/Rendering/*.cpp
         src/Engine/ImGui/*.cpp 
         src/Platform/OpenGL/*.cpp 
         src/Platform/GLFW/*.cpp 

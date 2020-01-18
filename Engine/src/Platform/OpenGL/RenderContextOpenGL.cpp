@@ -20,6 +20,11 @@ namespace Engine
         {
             ENGINE_ERROR("Glad failed to initialize!");
         }
+
+        ENGINE_INFO("OpenGL Info:");
+        ENGINE_INFO("    Vendor:   {0}", glGetString(GL_VENDOR));
+        ENGINE_INFO("    Renderer: {0}", glGetString(GL_RENDERER));
+        ENGINE_INFO("    Version:  {0}", glGetString(GL_VERSION));
     }
 
     void RenderContextOpenGL::SwapBuffers()

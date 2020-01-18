@@ -7,6 +7,10 @@
 #include "Event/WindowEvent.h"
 #include "LayerStack.h"
 #include "ImGui/ImGuiLayer.h"
+#include "Rendering/Shader.h"
+#include "Rendering/Buffer.h"
+#include "Rendering/RenderAPI.h"
+#include "Rendering/VertexArray.h"
 
 namespace Engine
 {
@@ -26,8 +30,13 @@ namespace Engine
 
         private:
             bool OnWindowCloseEvent(WindowCloseEvent& e);
-
             bool m_isRunning = true;
+
+            std::unique_ptr<VertexArray> m_vertexArray;
+            std::unique_ptr<Shader> m_shader;
+            std::unique_ptr<VertexBuffer> m_vertexBuffer;
+            std::unique_ptr<IndexBuffer> m_indexBuffer;
+
             ImGuiLayer* m_imguiLayer = nullptr;
             std::unique_ptr<Window> m_window;
             LayerStack m_layerStack;      

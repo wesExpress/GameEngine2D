@@ -15,9 +15,9 @@ class TestLayer : public Engine::Layer
 
         virtual void OnImGuiRender() override
         {
-            //ImGui::Begin("Test");
-            //ImGui::Text("Text");
-            //ImGui::End();
+            ImGui::Begin("Test");
+            ImGui::Text("Text");
+            ImGui::End();
         }
 };
 
