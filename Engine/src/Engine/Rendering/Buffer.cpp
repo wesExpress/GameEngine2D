@@ -1,8 +1,9 @@
 #include "Buffer.h"
-#include "RenderAPI.h"
+#include "Renderer.h"
 #include "Platform/OpenGL/BufferOpenGL.h"
 
 #include "Logging.h"
+#include "EngineDefines.h"
 
 namespace Engine
 {
@@ -10,13 +11,13 @@ namespace Engine
     {
         switch(Renderer::Get())
         {
-            case RenderAPI::None:
-                ENGINE_ERROR("No renderer API is not supported!");
+            case RendererAPI::API::None:
+                ENGINE_ASSERT(0, "No renderer API is not supported!");
                 return nullptr;
-            case RenderAPI::OpenGL:
+            case RendererAPI::API::OpenGL:
                 return new VertexBufferOpenGL(vertices, size);
             default:
-                ENGINE_ERROR("Unsupported/unknown render API!");
+                ENGINE_ASSERT(0, "Unsupported/unknown render API!");
                 return nullptr;
         }
     }
@@ -25,13 +26,13 @@ namespace Engine
     {
         switch(Renderer::Get())
         {
-            case None:
-                ENGINE_ERROR("No renderer API is not supported!");
+            case RendererAPI::API::None:
+                ENGINE_ASSERT(0, "No renderer API is not supported!");
                 return nullptr;
-            case OpenGL:
+            case RendererAPI::API::OpenGL:
                 return new IndexBufferOpenGL(indices, count);
             default:
-                ENGINE_ERROR("Unsupported/unknown render API!");
+                ENGINE_ASSERT(0, "Unsupported/unknown render API!");
                 return nullptr;
         }
     }

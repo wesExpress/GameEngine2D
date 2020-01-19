@@ -10,11 +10,6 @@
 #include "Event/Event.h"
 #include "Event/WindowEvent.h"
 
-#include "Rendering/Shader.h"
-#include "Rendering/Buffer.h"
-#include "Rendering/RenderAPI.h"
-#include "Rendering/VertexArray.h"
-
 namespace Engine
 {
     class EngineApp
@@ -34,12 +29,6 @@ namespace Engine
         private:
             bool OnWindowCloseEvent(WindowCloseEvent& e);
             bool m_isRunning = true;
-
-            std::shared_ptr<Shader> m_shaderMultiColor;
-            std::shared_ptr<VertexArray> m_triangleVA;
-
-            std::shared_ptr<Shader> m_shaderBlue;
-            std::shared_ptr<VertexArray> m_squareVA;
 
             ImGuiLayer* m_imguiLayer = nullptr;
             std::unique_ptr<Window> m_window;

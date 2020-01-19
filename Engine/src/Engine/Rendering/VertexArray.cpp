@@ -1,8 +1,9 @@
 #include "VertexArray.h"
-#include "RenderAPI.h"
+#include "Renderer.h"
 #include "Platform/OpenGL/VertexArrayOpenGL.h"
 
 #include "Logging.h"
+#include "EngineDefines.h"
 
 namespace Engine
 {
@@ -10,13 +11,13 @@ namespace Engine
     {
         switch(Renderer::Get())
         {
-            case RenderAPI::None:
-                ENGINE_ERROR("No render API is no suppoted!");
+            case RendererAPI::API::None:
+                ENGINE_ASSERT(0, "No render API is not suppoted!")
                 return nullptr;
-            case RenderAPI::OpenGL:
+            case RendererAPI::API::OpenGL:
                 return new VertexArrayOpenGL();
             default:
-                ENGINE_ERROR("Unknown render API!");
+                ENGINE_ASSERT(0, "Unknown render API!");
                 return nullptr;
         }
     }

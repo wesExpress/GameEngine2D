@@ -1,7 +1,7 @@
 #ifndef __EVENT_H__
 #define __EVENT_H__
 
-#define BIT(x) (1 << x)
+#include "EngineDefines.h"
 
 namespace Engine
 {
