@@ -1,6 +1,7 @@
 #include "EngineApp.h"
 #include "Event/WindowEvent.h"
 #include "Input.h"
+#include "EngineDefines.h"
 
 #include <glad/glad.h>
 
@@ -8,86 +9,71 @@
 
 namespace Engine
 {
-    static GLenum ShaderTypeToOpenGLType(ShaderDataType type)
-    {
-        switch(type)
-        {
-            case ShaderDataType::Int:
-            case ShaderDataType::Int2:
-            case ShaderDataType::Int3:
-            case ShaderDataType::Int4: return GL_INT;
-
-            case ShaderDataType::Mat3:
-            case ShaderDataType::Mat4:
-            case ShaderDataType::Float:
-            case ShaderDataType::Float2:
-            case ShaderDataType::Float3:
-            case ShaderDataType::Float4: return GL_FLOAT;
-
-            case ShaderDataType::Bool: return GL_BOOL;
-
-            default: return 0;
-        }
-    }
-
     EngineApp* EngineApp::m_instance = nullptr;
     RenderAPI Renderer::m_renderAPI = RenderAPI::OpenGL;
 
     EngineApp::EngineApp()
-    {
-        if (m_instance != nullptr)
-        {
-            ENGINE_ERROR("App already exists!");
-        }
-        else
-        {
-            m_instance = this;
-        }
-        
+    {   
+        ENGINE_ASSERT(!m_instance, "App already exists!");
+        m_instance = this;
+
         m_window = std::unique_ptr<Window>(Window::Create());
         m_window->SetEventCallback(BIND_FN(EngineApp::OnEvent));
 
         m_imguiLayer = new ImGuiLayer();
         PushOverlay(m_imguiLayer);
 
-        m_vertexArray.reset(VertexArray::Create());
+        // triangle rendering
 
-        float vertices[3 * 7] =
+        m_triangleVA.reset(VertexArray::Create());
+
+        float triangleVertices[3 * 7] =
         {
             -0.5f, -0.5f, 0.0f, 0.8f, 0.3f, 0.8f, 1.0f,
              0.5f, -0.5f, 0.0f, 0.3f, 0.2f, 0.8f, 1.0f,
              0.0f,  0.5f, 0.0f, 0.7f, 0.8f, 0.2f, 1.0f
         };
 
-        m_vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+        std::shared_ptr<VertexBuffer> triangleVB;
+        triangleVB.reset(VertexBuffer::Create(triangleVertices, sizeof(triangleVertices)));
+        triangleVB->SetLayout({
+            { ShaderDataType::Float3, "a_Position"},
+            { ShaderDataType::Float4, "a_Color"}
+        });
+        m_triangleVA->AddVertexBuffer(triangleVB);
 
+        uint32_t triangleIndices[3] = { 0, 1, 2 };
+        std::shared_ptr<IndexBuffer> triangleIB;
+        triangleIB.reset(IndexBuffer::Create(triangleIndices, sizeof(triangleIndices) / sizeof(uint32_t)));
+        m_triangleVA->SetIndexBuffer(triangleIB);
+
+        // square rendering
+
+        m_squareVA.reset(VertexArray::Create());
+
+        float squareVertices[3 * 4] =
         {
-            BufferLayout layout = {
-                { ShaderDataType::Float3, "a_Position"},
-                { ShaderDataType::Float4, "a_Color"}
-            };
-            m_vertexBuffer->SetLayout(layout);
-        }
+            -0.75f, -0.75f, 0.0f,
+             0.75f, -0.75f, 0.0f,
+             0.75f,  0.75f, 0.0f,
+            -0.75f,  0.75f, 0.0f
+        };
 
-        const auto& layout = m_vertexBuffer->GetLayout();
-        uint32_t index = 0;
-        for (const auto& element : layout)
-        {
-            glEnableVertexAttribArray(index);
-            glVertexAttribPointer(
-                index, 
-                element.GetElementCount(), 
-                ShaderTypeToOpenGLType(element.type), 
-                element.normalized ? GL_TRUE : GL_FALSE, 
-                layout.GetStride(), 
-                ((char*)NULL + element.offset));
-            index++;
-        }
+        std::shared_ptr<VertexBuffer> squareVB;
+        squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+        squareVB->SetLayout({
+            { ShaderDataType::Float3, "a_Position"}
+        });
+        m_squareVA->AddVertexBuffer(squareVB);
 
-        uint32_t indices[3] = { 0, 1, 2 };
-        m_indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+        uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
+        std::shared_ptr<IndexBuffer> squareIB;
+        squareIB.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+        m_squareVA->SetIndexBuffer(squareIB);
 
-        std::string vertexSource = R"(
+        // multi color shader
+        
+        std::string multiColorShaderVertexSrc = R"(
             #version 330
 
             layout(location = 0) in vec3 a_Position;
@@ -104,7 +90,7 @@ namespace Engine
             }
         )";
 
-        std::string fragSource = R"(
+        std::string multiColorShaderFragmentSrc = R"(
             #version 330
 
             layout(location = 0) out vec4 color;
@@ -119,7 +105,38 @@ namespace Engine
             }
         )";
 
-        m_shader.reset(Shader::Create(vertexSource, fragSource));
+        m_shaderMultiColor.reset(Shader::Create(multiColorShaderVertexSrc, multiColorShaderFragmentSrc));
+
+        // blue color shader
+        
+        std::string blueShaderVertexSrc = R"(
+            #version 330
+
+            layout(location = 0) in vec3 a_Position;
+
+            out vec3 v_position;
+
+            void main()
+            {
+                v_position = vec3(a_Position);
+                gl_Position = vec4(a_Position, 1.0);
+            }
+        )";
+
+        std::string blueShaderFragSrc = R"(
+            #version 330
+
+            layout(location = 0) out vec4 color;
+
+            in vec3 v_position;
+
+            void main()
+            {
+                color = vec4(0.3, 0.2, 0.8, 0.0);
+            }
+        )";
+
+        m_shaderBlue.reset(Shader::Create(blueShaderVertexSrc, blueShaderFragSrc));
     }
 
     void EngineApp::Run()
@@ -129,9 +146,13 @@ namespace Engine
             glClearColor(0.1f, 0.1f, 0.1f, 1);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            m_shader->Bind();
-            m_vertexArray->Bind();
-            glDrawElements(GL_TRIANGLES, m_indexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+            m_shaderBlue->Bind();
+            m_squareVA->Bind();
+            glDrawElements(GL_TRIANGLES, m_squareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+
+            m_shaderMultiColor->Bind();
+            m_triangleVA->Bind();
+            glDrawElements(GL_TRIANGLES, m_triangleVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
             for (Layer* layer : m_layerStack)
             {

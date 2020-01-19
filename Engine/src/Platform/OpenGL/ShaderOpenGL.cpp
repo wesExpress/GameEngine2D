@@ -107,6 +107,8 @@ namespace Engine
         // Always detach shaders after a successful link.
         glDetachShader(program, vertexShader);
         glDetachShader(program, fragShader);
+
+        ENGINE_INFO("Created OpenGL shaders.");
     }
 
     ShaderOpenGL::~ShaderOpenGL()

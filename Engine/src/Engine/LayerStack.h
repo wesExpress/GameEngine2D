@@ -1,3 +1,6 @@
+#ifndef __LAYERSTACK_H__
+#define __LAYERSTACK_H__
+
 #include "Layer.h"
 
 namespace Engine
@@ -29,3 +32,5 @@ namespace Engine
             unsigned int m_insertIndex = 0;
     };
 }
+
+#endif

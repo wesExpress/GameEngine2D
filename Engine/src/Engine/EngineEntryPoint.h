@@ -1,5 +1,5 @@
-#ifndef __ENGINEENTRY_H__
-#define __ENGINEENTRY_H__
+#ifndef __ENTRY_H__
+#define __ENTRY_H__
 
 #include "EngineApp.h"
 #include "Logging.h"

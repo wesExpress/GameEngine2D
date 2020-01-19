@@ -1,12 +1,15 @@
 #ifndef __ENGINEAPP_H__
 #define __ENGINEAPP_H__
 
-#include "Logging.h"
 #include "Window.h"
+
+#include "Engine/Layer.h"
+#include "Engine/LayerStack.h"
+#include "Engine/ImGui/ImGuiLayer.h"
+
 #include "Event/Event.h"
 #include "Event/WindowEvent.h"
-#include "LayerStack.h"
-#include "ImGui/ImGuiLayer.h"
+
 #include "Rendering/Shader.h"
 #include "Rendering/Buffer.h"
 #include "Rendering/RenderAPI.h"
@@ -32,10 +35,11 @@ namespace Engine
             bool OnWindowCloseEvent(WindowCloseEvent& e);
             bool m_isRunning = true;
 
-            std::unique_ptr<VertexArray> m_vertexArray;
-            std::unique_ptr<Shader> m_shader;
-            std::unique_ptr<VertexBuffer> m_vertexBuffer;
-            std::unique_ptr<IndexBuffer> m_indexBuffer;
+            std::shared_ptr<Shader> m_shaderMultiColor;
+            std::shared_ptr<VertexArray> m_triangleVA;
+
+            std::shared_ptr<Shader> m_shaderBlue;
+            std::shared_ptr<VertexArray> m_squareVA;
 
             ImGuiLayer* m_imguiLayer = nullptr;
             std::unique_ptr<Window> m_window;
