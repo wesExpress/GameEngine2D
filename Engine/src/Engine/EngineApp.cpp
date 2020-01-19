@@ -80,7 +80,7 @@ namespace Engine
                 ShaderTypeToOpenGLType(element.type), 
                 element.normalized ? GL_TRUE : GL_FALSE, 
                 layout.GetStride(), 
-                (const void *)element.offset);
+                ((char*)NULL + element.offset));
             index++;
         }
 
