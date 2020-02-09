@@ -1,9 +1,13 @@
-project (GameEngine2D)
+project( GameEngine2D )
+
+set( GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE )
+set( GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE )
+set( GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE )
 
 # add sub directories for projects with cmake support (currently glad, spdlog, GLFW)
-add_subdirectory(vendor/glad)
-add_subdirectory(vendor/spdlog)
-add_subdirectory(vendor/GLFW)
+add_subdirectory( vendor/glad )
+add_subdirectory( vendor/spdlog )
+add_subdirectory( vendor/glfw )
 
 # source code
 file(GLOB 
@@ -19,21 +23,21 @@ file(GLOB
 )
 
 # library creation
-add_library(GameEngine2D 
+add_library( GameEngine2D 
     STATIC 
         ${SOURCES}
 )
-target_link_libraries(GameEngine2D  
+target_link_libraries( GameEngine2D  
     PRIVATE
         GLAD
-        GLFW
+        glfw
         spdlog
 )
-target_precompile_headers(GameEngine2D 
+target_precompile_headers( GameEngine2D 
     PUBLIC 
         EnginePCH.h
 )
-target_include_directories(GameEngine2D 
+target_include_directories( GameEngine2D 
     PUBLIC 
         src 
         src/Engine 
@@ -44,7 +48,7 @@ target_include_directories(GameEngine2D
 
     PRIVATE
         vendor/spdlog/include
-        vendor/GLFW/include
+        vendor/glfw/include
         vendor/glad/include
         
 )
