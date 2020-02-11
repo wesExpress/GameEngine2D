@@ -5,6 +5,7 @@ set( GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE )
 set( GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE )
 
 # add sub directories for projects with cmake support (currently glad, spdlog, GLFW)
+
 add_subdirectory( vendor/glad )
 add_subdirectory( vendor/spdlog )
 add_subdirectory( vendor/glfw )
