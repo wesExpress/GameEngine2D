@@ -64,6 +64,8 @@ class TestLayer : public Engine::Layer
                 layout(location = 0) in vec3 a_Position;
                 layout(location = 1) in vec4 a_Color;
 
+                uniform mat4 u_viewProjection;
+
                 out vec3 v_position;
                 out vec4 v_color;
 
@@ -71,7 +73,7 @@ class TestLayer : public Engine::Layer
                 {
                     v_position = vec3(a_Position);
                     v_color = a_Color;
-                    gl_Position = vec4(a_Position, 1.0);
+                    gl_Position = u_viewProjection * vec4(a_Position, 1.0);
                 }
             )";
 
@@ -99,12 +101,14 @@ class TestLayer : public Engine::Layer
 
                 layout(location = 0) in vec3 a_Position;
 
+                uniform mat4 u_viewProjection;
+
                 out vec3 v_position;
 
                 void main()
                 {
                     v_position = vec3(a_Position);
-                    gl_Position = vec4(a_Position, 1.0);
+                    gl_Position = u_viewProjection * vec4(a_Position, 1.0);
                 }
             )";
 
@@ -117,7 +121,7 @@ class TestLayer : public Engine::Layer
 
                 void main()
                 {
-                    color = vec4(0.3, 0.2, 0.8, 0.0);
+                    color = vec4(0.2, 0.3, 0.8, 1.0);
                 }
             )";
 
@@ -129,7 +133,7 @@ class TestLayer : public Engine::Layer
             Engine::RendererCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
             Engine::RendererCommand::Clear();
 
-            Engine::Renderer::BeginScene();
+            Engine::Renderer::BeginScene(m_cameraController.GetCamera());
 
             Engine::Renderer::Submit(m_shaderBlue, m_squareVA);
             Engine::Renderer::Submit(m_shaderMultiColor, m_triangleVA);
@@ -139,16 +143,22 @@ class TestLayer : public Engine::Layer
 
         virtual void OnImGuiRender() override
         {
-            ImGui::Begin("Test");
-            ImGui::Text("Text");
-            ImGui::End();
+            
         }
+
+        virtual void OnEvent(Engine::Event& e) override
+        {
+            m_cameraController.OnEvent(e);
+        }
+
     private:
         std::shared_ptr<Engine::Shader> m_shaderMultiColor;
         std::shared_ptr<Engine::VertexArray> m_triangleVA;
 
         std::shared_ptr<Engine::Shader> m_shaderBlue;
         std::shared_ptr<Engine::VertexArray> m_squareVA;
+
+        Engine::CameraController m_cameraController;
 };
 
 class Application : public Engine::EngineApp

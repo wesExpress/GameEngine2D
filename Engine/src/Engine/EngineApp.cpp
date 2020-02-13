@@ -17,6 +17,9 @@ namespace Engine
 
         m_imguiLayer = new ImGuiLayer();
         PushOverlay(m_imguiLayer);
+
+        //m_camera = std::unique_ptr<Camera>(new OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f));
+        //m_camera = std::unique_ptr<Camera>(new PerspectiveCamera(60.0f, 1.6f/0.9f, -1.0f, 1.0f));
     }
 
     void EngineApp::Run()
@@ -42,9 +45,6 @@ namespace Engine
     void EngineApp::OnEvent(Event& e)
     {
         EventDispatcher dispatcher(e);
-
-        //ENGINE_INFO(e.ToString());
-
         dispatcher.Dispatch<WindowCloseEvent>(BIND_FN(EngineApp::OnWindowCloseEvent));
 
         for(auto it = m_layerStack.end(); it != m_layerStack.begin(); )

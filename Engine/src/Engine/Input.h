@@ -9,8 +9,8 @@ namespace Engine
             inline static bool IsKeyPressed(int keycode) { return m_instance->IsKeyPressedImpl(keycode); }
             inline static bool IsMouseButtonPressed(int button) { return m_instance->IsMouseButtonPressedImpl(button); }
             inline static std::pair<float, float> GetMousePos() { return m_instance->GetMousePosImpl(); }
-            inline static float GetMouseX() { return m_instance->GetMouseX(); }
-            inline static float GetMouseY() { return m_instance->GetMouseY(); }
+            inline static float GetMouseX() { return m_instance->GetMouseXImpl(); }
+            inline static float GetMouseY() { return m_instance->GetMouseYImpl(); }
         protected:
             virtual bool IsKeyPressedImpl(int keycode) const = 0;
             virtual bool IsMouseButtonPressedImpl(int button) const = 0;

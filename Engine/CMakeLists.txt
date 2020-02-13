@@ -1,4 +1,4 @@
-project( GameEngine2D )
+project( Engine )
 
 set( GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE )
 set( GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE )
@@ -12,9 +12,10 @@ add_subdirectory( vendor/glfw )
 
 # source code
 file(GLOB 
-    SOURCES 
+    SOURCES CONFIGURE_DEPENDS
         src/Engine/*.cpp 
         src/Engine/Rendering/*.cpp
+        src/Engine/Rendering/Camera/*.cpp
         src/Engine/ImGui/*.cpp 
         src/Platform/OpenGL/*.cpp 
         src/Platform/GLFW/*.cpp 
@@ -24,21 +25,21 @@ file(GLOB
 )
 
 # library creation
-add_library( GameEngine2D 
+add_library( Engine 
     STATIC 
         ${SOURCES}
 )
-target_link_libraries( GameEngine2D  
-    PRIVATE
+target_link_libraries( Engine  
+    PUBLIC
         GLAD
         glfw
         spdlog
 )
-target_precompile_headers( GameEngine2D 
+target_precompile_headers( Engine 
     PUBLIC 
         EnginePCH.h
 )
-target_include_directories( GameEngine2D 
+target_include_directories( Engine 
     PUBLIC 
         src 
         src/Engine 
@@ -47,9 +48,8 @@ target_include_directories( GameEngine2D
         vendor/imgui
         vendor/glm
 
-    PRIVATE
         vendor/spdlog/include
+    PRIVATE
         vendor/glfw/include
         vendor/glad/include
-        
 )

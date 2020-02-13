@@ -1,7 +1,8 @@
 #ifndef __LOGGING_H__
 #define __LOGGING_H__
 
-#include "spdlog/spdlog.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 
 namespace Engine
 {

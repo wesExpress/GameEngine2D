@@ -31,15 +31,19 @@
 *.out
 *.app
 
+# visual studio stuff
+.vs/
+
 # vscode junk
-.vscode/*
+.vscode/
 *.code-workspace
 *.json
 
 # other junk
 .DS_STORE
 
-# binaries
+# build files
 **/bin/
 bin_int/
-build/*
+build/
+out/

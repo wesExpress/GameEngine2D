@@ -32,7 +32,8 @@ namespace Engine
 
             ImGuiLayer* m_imguiLayer = nullptr;
             std::unique_ptr<Window> m_window;
-            LayerStack m_layerStack;      
+            LayerStack m_layerStack;
+
             static EngineApp* m_instance;
     };
 

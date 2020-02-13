@@ -1,21 +1,40 @@
 # GameEngine2D #
+
 Creating a 2D game engine by following along with development of the [Hazel game engine.](https://github.com/TheCherno/Hazel)
 
-# CMake #
-requires version 3.6
+Currently uses OpenGL and GLFW for all platforms. This will eventually be replaced on each targeted platform, but first we want to get everything working.
 
-### Compilng and building ###
-Create and navigate to **build/**, run 
-```
-cmake ..
-make
+## CMake ##
+
+Requires version 3.16, as we need **target_precompile_headers**.
+
+Succesfull builds tested:
+
+- [x] Mac (Terminal)
+- [x] Mac (XCode)
+- [x] Windows (Visual Studio)
+- [ ] UNIX
+
+### UNIX and Mac (Terminal) ###
+
+```console
+user@computer:~$ mkdir build/terminal && cd "$_"
+user@computer:~$ cmake ../..
+user@computer:~$ make
 ```
 
 This will generate an application in **build/Application**
 
-To clean **build** for a fresh install, run: 
+### Mac (XCode) ###
+
+```console
+user@computer:~$ mkdir build/xcode && cd "$_"
+user@computer:~$ cmake -G "Xcode" ../..
+user@computer:~$ xed GameEngine2D.xcodeproj/
 ```
-rm -rf * 
-cmake ..
-make
-```
+
+Select **Application** under build scheme, and you should be good to go.
+
+### Windows (Visual Studio) ###
+
+Create a blank project and open the root **CMakeLists.txt** file. Select **Application.exe** from build menu, and that's it.

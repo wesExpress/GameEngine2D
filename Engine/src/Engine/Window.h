@@ -4,7 +4,7 @@
 #include "Logging.h"
 #include "Event/Event.h"
 
-#define DEFAULT_WINDOW_WIDTH 1080
+#define DEFAULT_WINDOW_WIDTH 1280
 #define DEFAULT_WINDOW_HEIGHT 720
 #define DEFAULT_WINDOW_TITLE "GameEngine2D"
 

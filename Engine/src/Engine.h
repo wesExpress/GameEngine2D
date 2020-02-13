@@ -5,6 +5,8 @@
 #include "Engine/EngineEntryPoint.h"
 
 #include "Engine/Input.h"
+
+#include "Engine/Event/Event.h"
 #include "Engine/Event/KeyCodes.h"
 #include "Engine/Event/MouseButtons.h"
 
@@ -17,5 +19,7 @@
 #include "Rendering/Shader.h"
 #include "Rendering/VertexArray.h"
 #include "Rendering/Renderer.h"
+
+#include "Rendering/Camera/CameraController.h"
 
 #endif
