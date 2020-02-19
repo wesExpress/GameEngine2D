@@ -1,6 +1,6 @@
 # GameEngine2D #
 
-Creating a 2D game engine by following along with development of the [Hazel game engine.](https://github.com/TheCherno/Hazel)
+Creating a 2D game engine by following along with development of the [Hazel game engine.](https://github.com/TheCherno/Hazel) As I am primarily developing on a Mac, I chose to use CMake for my build system. It is trivial to get CMake to work with Visual Studio on Windows.
 
 Currently uses OpenGL and GLFW for all platforms. This will eventually be replaced on each targeted platform, but first we want to get everything working.
 

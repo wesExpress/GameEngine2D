@@ -23,6 +23,7 @@ namespace Engine
 
             void Destroy();
             inline void SetEventCallback(const std::function<void(Event&)>& callback) override { m_windowData.EventCallback = callback; }
+            virtual void SetVsync(bool enabled) override;
 
         private:
             GLFWwindow* m_window = nullptr;

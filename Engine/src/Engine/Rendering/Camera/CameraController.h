@@ -15,9 +15,8 @@ namespace Engine
             Camera GetCamera() { return *m_camera; }
             const Camera GetCamera() const { return *m_camera; }
 
-            void OnEvent(Event& e);
-        private:
-            bool OnKeyPressed(KeyPressedEvent& e);
+            void SetPos(const glm::vec3& position);
+            void SetRotation(float rotation);
         private:
             std::unique_ptr<Camera> m_camera;
     };

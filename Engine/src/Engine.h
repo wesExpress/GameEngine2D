@@ -2,7 +2,6 @@
 #define __ENGINE_H__
 
 #include "Engine/EngineApp.h"
-#include "Engine/EngineEntryPoint.h"
 
 #include "Engine/Input.h"
 
@@ -15,6 +14,8 @@
 #include "Engine/ImGui/ImGuiLayer.h"
 
 #include "Engine/Logging.h"
+
+#include "Engine/Timestep.h"
 
 #include "Rendering/Shader.h"
 #include "Rendering/VertexArray.h"

@@ -2,6 +2,8 @@
 #include "Event/WindowEvent.h"
 #include "Input.h"
 #include "EngineDefines.h"
+#include "Platform/GLFW/TimeGLFW.h"
+#include "Timestep.h"
 
 namespace Engine
 {
@@ -14,21 +16,23 @@ namespace Engine
 
         m_window = std::unique_ptr<Window>(Window::Create());
         m_window->SetEventCallback(BIND_FN(EngineApp::OnEvent));
+        m_window->SetVsync(false);
 
         m_imguiLayer = new ImGuiLayer();
         PushOverlay(m_imguiLayer);
-
-        //m_camera = std::unique_ptr<Camera>(new OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f));
-        //m_camera = std::unique_ptr<Camera>(new PerspectiveCamera(60.0f, 1.6f/0.9f, -1.0f, 1.0f));
     }
 
     void EngineApp::Run()
     {
         while(m_isRunning)
         {
+            float time = GetTime();
+            Timestep timestep = time - m_lastTime;
+            m_lastTime = time;
+
             for (Layer* layer : m_layerStack)
             {
-                layer->OnUpdate();
+                layer->OnUpdate(timestep);
             }
 
             m_imguiLayer->Begin();

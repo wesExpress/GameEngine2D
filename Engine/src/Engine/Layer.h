@@ -2,6 +2,7 @@
 #define __LAYER_H__
 
 #include "Event/Event.h"
+#include "Timestep.h"
 
 namespace Engine
 {
@@ -11,7 +12,7 @@ namespace Engine
             Layer(const std::string& name = "Layer");
             virtual ~Layer();
 
-            virtual void OnUpdate() {}
+            virtual void OnUpdate(const Timestep& ts) {}
             virtual void OnAttach() {}
             virtual void OnDetach() {}
             virtual void OnEvent(Event& e) {}

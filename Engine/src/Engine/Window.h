@@ -38,6 +38,7 @@ namespace Engine
         unsigned int width, height;
         std::string title;
         std::function<void(Event&)> EventCallback;
+        bool vsync;
     };
 
     class Window
@@ -53,6 +54,8 @@ namespace Engine
             virtual inline void SetEventCallback(const std::function<void(Event&)>& callback) = 0;
 
             static Window* Create(const WindowProps& props = WindowProps());
+
+            virtual void SetVsync(bool enabled) = 0;
     };
 }
 #endif

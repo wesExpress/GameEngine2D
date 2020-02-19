@@ -35,6 +35,8 @@ namespace Engine
             LayerStack m_layerStack;
 
             static EngineApp* m_instance;
+
+            float m_lastTime = 0.0f;
     };
 
     EngineApp* CreateApplication();

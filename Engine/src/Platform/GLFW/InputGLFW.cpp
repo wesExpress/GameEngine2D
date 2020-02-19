@@ -10,7 +10,7 @@ namespace Engine
     {
         auto window = static_cast<GLFWwindow*>(Engine::EngineApp::Get().GetWindow().GetWindow());
         auto status = glfwGetKey(window, keycode);
-        return (status == GLFW_PRESS) || (status == GLFW_REPEAT);
+        return (status == GLFW_PRESS || status == GLFW_REPEAT);
     }
 
     bool InputGLFW::IsMouseButtonPressedImpl(int button) const

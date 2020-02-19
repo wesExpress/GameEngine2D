@@ -42,7 +42,7 @@ namespace Engine
             glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_FALSE);
             #endif
 
-            ENGINE_TRACE("GLFW initialized.");
+            ENGINE_INFO("GLFW initialized.");
 
             m_windowData = WindowProps(props);
 
@@ -50,6 +50,7 @@ namespace Engine
             m_windowData.width, 
             m_windowData.height, 
             m_windowData.title.c_str(), NULL, NULL);
+            SetVsync(true);
 
             if (m_window == NULL)
             {
@@ -203,4 +204,18 @@ namespace Engine
             data.EventCallback(e);
         });
     };
+
+    void WindowGLFW::SetVsync(bool enabled)
+    {
+        if(enabled)
+        {
+            glfwSwapInterval(1);
+        }
+        else
+        {
+            glfwSwapInterval(0);
+        }
+
+        m_windowData.vsync = enabled;
+    }
 }

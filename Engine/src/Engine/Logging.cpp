@@ -11,6 +11,9 @@ namespace Engine
         spdlog::set_pattern("%^[%T] %n: %v%$");
 
         m_engineLogger = spdlog::stdout_color_mt("ENGINE");
+        m_engineLogger->set_level(spdlog::level::trace);
+        
         m_clientLogger = spdlog::stdout_color_mt("CLIENT");
+        m_clientLogger->set_level(spdlog::level::trace);
     }
 }
