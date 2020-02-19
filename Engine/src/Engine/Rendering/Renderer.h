@@ -6,6 +6,8 @@
 #include "VertexArray.h"
 #include "Camera/Camera.h"
 
+#include <glm/glm.hpp>
+
 namespace Engine
 {
     class Renderer
@@ -13,7 +15,7 @@ namespace Engine
         public:
             static void BeginScene(const Camera& camera);
             static void EndScene();
-            static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray);
+            static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const glm::mat4& transform = glm::mat4(1.0f));
 
             inline static RendererAPI::API Get() { return RendererAPI::GetAPI(); }
         private:

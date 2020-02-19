@@ -2,7 +2,7 @@
 
 TestLayer::TestLayer()
 :
-Engine::Layer("Test Layer"), m_cameraPosition(0.0f)
+Engine::Layer("Test Layer"), m_cameraPosition(0.0f), squareTransform(0.0f)
 {
     // triangle rendering
 
@@ -34,10 +34,10 @@ Engine::Layer("Test Layer"), m_cameraPosition(0.0f)
 
     float squareVertices[3 * 4] =
     {
-        -0.75f, -0.75f, 0.0f,
-        0.75f, -0.75f, 0.0f,
-        0.75f,  0.75f, 0.0f,
-        -0.75f,  0.75f, 0.0f
+        -0.5f, -0.5f, 0.0f,
+         0.5f, -0.5f, 0.0f,
+         0.5f,  0.5f, 0.0f,
+        -0.5f,  0.5f, 0.0f
     };
 
     std::shared_ptr<Engine::VertexBuffer> squareVB;
@@ -61,6 +61,7 @@ Engine::Layer("Test Layer"), m_cameraPosition(0.0f)
         layout(location = 1) in vec4 a_Color;
 
         uniform mat4 u_viewProjection;
+        uniform mat4 u_transform;
 
         out vec3 v_position;
         out vec4 v_color;
@@ -69,7 +70,7 @@ Engine::Layer("Test Layer"), m_cameraPosition(0.0f)
         {
             v_position = vec3(a_Position);
             v_color = a_Color;
-            gl_Position = u_viewProjection * vec4(a_Position, 1.0);
+            gl_Position = u_viewProjection * u_transform * vec4(a_Position, 1.0);
         }
     )";
 
@@ -98,13 +99,14 @@ Engine::Layer("Test Layer"), m_cameraPosition(0.0f)
         layout(location = 0) in vec3 a_Position;
 
         uniform mat4 u_viewProjection;
+        uniform mat4 u_transform;
 
         out vec3 v_position;
 
         void main()
         {
             v_position = vec3(a_Position);
-            gl_Position = u_viewProjection * vec4(a_Position, 1.0);
+            gl_Position = u_viewProjection * u_transform * vec4(a_Position, 1.0);
         }
     )";
 
@@ -126,7 +128,7 @@ Engine::Layer("Test Layer"), m_cameraPosition(0.0f)
 
 void TestLayer::OnUpdate(const Engine::Timestep& ts)
 {
-    CLIENT_TRACE("Delta time: {0}", ts.GetTimeSeconds());
+    //CLIENT_TRACE("Delta time: {0}", ts.GetTimeSeconds());
 
     if(Engine::Input::IsKeyPressed(KEY_W) || Engine::Input::IsKeyPressed(KEY_UP))
     {
@@ -155,6 +157,24 @@ void TestLayer::OnUpdate(const Engine::Timestep& ts)
         cameraRotation += cameraRotateSpeed * ts.GetTimeSeconds();
     }
 
+    if(Engine::Input::IsKeyPressed(KEY_J))
+    {
+        squareTransform.x -= cameraMoveSpeed * ts.GetTimeSeconds();
+    }
+    else if(Engine::Input::IsKeyPressed(KEY_L))
+    {
+        squareTransform.x += cameraMoveSpeed * ts.GetTimeSeconds();
+    }
+
+    if(Engine::Input::IsKeyPressed(KEY_I))
+    {
+        squareTransform.y -= cameraMoveSpeed * ts.GetTimeSeconds();
+    }
+    else if(Engine::Input::IsKeyPressed(KEY_K))
+    {
+        squareTransform.y += cameraMoveSpeed * ts.GetTimeSeconds();
+    }
+
     m_cameraController.SetPos(m_cameraPosition);
     m_cameraController.SetRotation(cameraRotation);
 
@@ -163,8 +183,17 @@ void TestLayer::OnUpdate(const Engine::Timestep& ts)
 
     Engine::Renderer::BeginScene(m_cameraController.GetCamera());
 
-    Engine::Renderer::Submit(m_shaderBlue, m_squareVA);
     Engine::Renderer::Submit(m_shaderMultiColor, m_triangleVA);
+
+    glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+    for(int y = 0; y < 20; y++)
+    {
+        for (int x = 0; x<20; x++)
+        {
+            glm::vec3 pos(x*0.11f, y*0.11f, 0.0f);
+            Engine::Renderer::Submit(m_shaderBlue, m_squareVA, glm::translate(glm::mat4(1.0f), pos)*scale);
+        }
+    }
 
     Engine::Renderer::EndScene();
 }

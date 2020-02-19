@@ -23,6 +23,7 @@ class TestLayer : public Engine::Layer
         float cameraMoveSpeed = 5.0f;
         float cameraRotateSpeed = 180.0f;
         float cameraRotation = 0.0f;
+        glm::vec3 squareTransform;
 };
 
 #endif
