@@ -1,4 +1,6 @@
 #include "TestLayer.h"
+#include <imgui.h>
+#include <glm/gtc/type_ptr.hpp>
 
 TestLayer::TestLayer()
 :
@@ -93,7 +95,7 @@ Engine::Layer("Test Layer"), m_cameraPosition(0.0f), squareTransform(0.0f)
 
     // blue color shader
     
-    std::string blueShaderVertexSrc = R"(
+    std::string singleColorVertexSrc = R"(
         #version 330
 
         layout(location = 0) in vec3 a_Position;
@@ -110,20 +112,22 @@ Engine::Layer("Test Layer"), m_cameraPosition(0.0f), squareTransform(0.0f)
         }
     )";
 
-    std::string blueShaderFragSrc = R"(
+    std::string singleColorFragSrc = R"(
         #version 330
 
         layout(location = 0) out vec4 color;
 
         in vec3 v_position;
 
+        uniform vec3 u_color;
+
         void main()
         {
-            color = vec4(0.2, 0.3, 0.8, 1.0);
+            color = vec4(u_color, 1.0);
         }
     )";
 
-    m_shaderBlue.reset(Engine::Shader::Create(blueShaderVertexSrc, blueShaderFragSrc));
+    m_squareShader.reset(Engine::Shader::Create(singleColorVertexSrc, singleColorFragSrc));
 }
 
 void TestLayer::OnUpdate(const Engine::Timestep& ts)
@@ -184,6 +188,9 @@ void TestLayer::OnUpdate(const Engine::Timestep& ts)
     Engine::Renderer::BeginScene(m_cameraController.GetCamera());
 
     Engine::Renderer::Submit(m_shaderMultiColor, m_triangleVA);
+    
+    m_squareShader->Bind();
+    m_squareShader->UploadUniformFloat3("u_color", squareColor);
 
     glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
     for(int y = 0; y < 20; y++)
@@ -191,9 +198,16 @@ void TestLayer::OnUpdate(const Engine::Timestep& ts)
         for (int x = 0; x<20; x++)
         {
             glm::vec3 pos(x*0.11f, y*0.11f, 0.0f);
-            Engine::Renderer::Submit(m_shaderBlue, m_squareVA, glm::translate(glm::mat4(1.0f), pos)*scale);
+            Engine::Renderer::Submit(m_squareShader, m_squareVA, glm::translate(glm::mat4(1.0f), pos)*scale);
         }
     }
 
     Engine::Renderer::EndScene();
+}
+
+void TestLayer::OnImGuiRender()
+{
+    ImGui::Begin("Settings");
+    ImGui::ColorEdit3("Square Color", glm::value_ptr(squareColor));
+    ImGui::End();
 }
