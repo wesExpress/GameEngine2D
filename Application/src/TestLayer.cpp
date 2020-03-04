@@ -166,7 +166,13 @@ Engine::Layer("Test Layer"), m_cameraPosition(0.0f), squareTransform(0.0f)
 
     m_textureShader.reset(Engine::Shader::Create(textureVertexSrc, textureFragSrc));
 
-    m_texture = Engine::Texture2D::Create("/Users/wesleypeters/Documents/random_code/GameEngine2D/Application/assets/textures/Checkerboard.png");
+    const char* texture_path;
+#ifdef __APPLE__
+        texture_path = "/Users/wesleypeters/Documents/random_code/GameEngine2D/Application/assets/textures/Checkerboard.png";
+#else
+        texture_path = "C:/Users/wcp/source/projects/GameEngine2D/Application/assets/textures/Checkerboard.png";
+#endif
+    m_texture = Engine::Texture2D::Create(texture_path);
     m_textureShader->Bind();
     m_textureShader->UploadUniformInt("u_texture", 0);
 }
