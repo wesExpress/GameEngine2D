@@ -3,22 +3,12 @@
 #include <glad/glad.h>
 #include "stb_image.h"
 
-#include <mach-o/dyld.h>
-
 namespace Engine
 {
     Texture2DOpenGL::Texture2DOpenGL(const std::string& path)
     :
     m_path(path)
     {
-        char pwd[1024];
-        uint32_t size = sizeof(pwd);
-        if (_NSGetExecutablePath(pwd, &size) == 0)
-        {
-            ENGINE_TRACE("Current path: {0}", pwd);
-            ENGINE_TRACE("Image path: {0}", path);
-        }
-
         stbi_set_flip_vertically_on_load(1);
 
         int width, height, channels;
