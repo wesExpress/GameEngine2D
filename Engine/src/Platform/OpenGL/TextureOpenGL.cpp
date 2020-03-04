@@ -49,6 +49,8 @@ namespace Engine
         #ifdef __APPLE__
         glActiveTexture(GL_TEXTURE0 + slot);
         glBindTexture(GL_TEXTURE_2D, m_rendererID);
+        #else
+        glBindTextureUnit(slot, m_RendererID);
         #endif
     }
 }
