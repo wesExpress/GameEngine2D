@@ -47,3 +47,5 @@
 bin_int/
 build/
 out/
+bin_terminal/
+bin_xcode/

@@ -1,6 +1,8 @@
 #ifndef __ENGINE_H__
 #define __ENGINE_H__
 
+#include "Engine/EngineDefines.h"
+
 #include "Engine/EngineApp.h"
 
 #include "Engine/Input.h"
@@ -17,9 +19,10 @@
 
 #include "Engine/Timestep.h"
 
-#include "Rendering/Shader.h"
-#include "Rendering/VertexArray.h"
 #include "Rendering/Renderer.h"
+#include "Rendering/VertexArray.h"
+#include "Rendering/Shader.h"
+#include "Rendering/Texture.h"
 
 #include "Rendering/Camera/CameraController.h"
 

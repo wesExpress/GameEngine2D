@@ -20,6 +20,9 @@ file(GLOB
         src/Platform/OpenGL/*.cpp 
         src/Platform/GLFW/*.cpp 
 
+        # stb_image
+        vendor/stb_image/*.cpp
+
         # must compile and link imgui directly to project
         vendor/imgui/*.cpp
 )
@@ -52,4 +55,5 @@ target_include_directories( Engine
     PRIVATE
         vendor/glfw/include
         vendor/glad/include
+        vendor/stb_image
 )

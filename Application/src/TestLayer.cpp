@@ -17,7 +17,7 @@ Engine::Layer("Test Layer"), m_cameraPosition(0.0f), squareTransform(0.0f)
         0.0f,  0.5f, 0.0f, 0.7f, 0.8f, 0.2f, 1.0f
     };
 
-    std::shared_ptr<Engine::VertexBuffer> triangleVB;
+    Engine::Ref<Engine::VertexBuffer> triangleVB;
     triangleVB.reset(Engine::VertexBuffer::Create(triangleVertices, sizeof(triangleVertices)));
     triangleVB->SetLayout({
         { Engine::ShaderDataType::Float3, "a_Position"},
@@ -26,7 +26,7 @@ Engine::Layer("Test Layer"), m_cameraPosition(0.0f), squareTransform(0.0f)
     m_triangleVA->AddVertexBuffer(triangleVB);
 
     uint32_t triangleIndices[3] = { 0, 1, 2 };
-    std::shared_ptr<Engine::IndexBuffer> triangleIB;
+    Engine::Ref<Engine::IndexBuffer> triangleIB;
     triangleIB.reset(Engine::IndexBuffer::Create(triangleIndices, sizeof(triangleIndices) / sizeof(uint32_t)));
     m_triangleVA->SetIndexBuffer(triangleIB);
 
@@ -34,23 +34,24 @@ Engine::Layer("Test Layer"), m_cameraPosition(0.0f), squareTransform(0.0f)
 
     m_squareVA.reset(Engine::VertexArray::Create());
 
-    float squareVertices[3 * 4] =
+    float squareVertices[5 * 4] =
     {
-        -0.5f, -0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-         0.5f,  0.5f, 0.0f,
-        -0.5f,  0.5f, 0.0f
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+         0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+         0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+        -0.5f,  0.5f, 0.0f, 0.0f, 1.0f
     };
 
-    std::shared_ptr<Engine::VertexBuffer> squareVB;
+    Engine::Ref<Engine::VertexBuffer> squareVB;
     squareVB.reset(Engine::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
     squareVB->SetLayout({
-        { Engine::ShaderDataType::Float3, "a_Position"}
+        { Engine::ShaderDataType::Float3, "a_Position"},
+        { Engine::ShaderDataType::Float2, "a_TexCord"}
     });
     m_squareVA->AddVertexBuffer(squareVB);
 
     uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-    std::shared_ptr<Engine::IndexBuffer> squareIB;
+    Engine::Ref<Engine::IndexBuffer> squareIB;
     squareIB.reset(Engine::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
     m_squareVA->SetIndexBuffer(squareIB);
 
@@ -128,6 +129,46 @@ Engine::Layer("Test Layer"), m_cameraPosition(0.0f), squareTransform(0.0f)
     )";
 
     m_squareShader.reset(Engine::Shader::Create(singleColorVertexSrc, singleColorFragSrc));
+
+    // texture
+    std::string textureVertexSrc = R"(
+        #version 330
+
+        layout(location = 0) in vec3 a_Position;
+        layout(location = 1) in vec2 a_texCoord;
+
+        uniform mat4 u_viewProjection;
+        uniform mat4 u_transform;
+
+        out vec2 v_texCoord;
+
+        void main()
+        {
+            v_texCoord = a_texCoord;
+            gl_Position = u_viewProjection * u_transform * vec4(a_Position, 1.0);
+        }
+    )";
+
+    std::string textureFragSrc = R"(
+        #version 330
+
+        layout(location = 0) out vec4 color;
+
+        in vec2 v_texCoord;
+
+        uniform sampler2D u_texture;
+
+        void main()
+        {
+            color = texture(u_texture, v_texCoord);
+        }
+    )";
+
+    m_textureShader.reset(Engine::Shader::Create(textureVertexSrc, textureFragSrc));
+
+    m_texture = Engine::Texture2D::Create("/Users/wesleypeters/Documents/random_code/GameEngine2D/Application/assets/textures/Checkerboard.png");
+    m_textureShader->Bind();
+    m_textureShader->UploadUniformInt("u_texture", 0);
 }
 
 void TestLayer::OnUpdate(const Engine::Timestep& ts)
@@ -187,7 +228,8 @@ void TestLayer::OnUpdate(const Engine::Timestep& ts)
 
     Engine::Renderer::BeginScene(m_cameraController.GetCamera());
 
-    Engine::Renderer::Submit(m_shaderMultiColor, m_triangleVA);
+    // triangle
+    //Engine::Renderer::Submit(m_shaderMultiColor, m_triangleVA);
     
     m_squareShader->Bind();
     m_squareShader->UploadUniformFloat3("u_color", squareColor);
@@ -201,6 +243,9 @@ void TestLayer::OnUpdate(const Engine::Timestep& ts)
             Engine::Renderer::Submit(m_squareShader, m_squareVA, glm::translate(glm::mat4(1.0f), pos)*scale);
         }
     }
+
+    m_texture->Bind();
+    Engine::Renderer::Submit(m_textureShader, m_squareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
     Engine::Renderer::EndScene();
 }

@@ -14,7 +14,7 @@ namespace Engine
         ENGINE_ASSERT(!m_instance, "App already exists!");
         m_instance = this;
 
-        m_window = std::unique_ptr<Window>(Window::Create());
+        m_window = Scope<Window>(Window::Create());
         m_window->SetEventCallback(BIND_FN(EngineApp::OnEvent));
         m_window->SetVsync(false);
 

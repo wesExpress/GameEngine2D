@@ -46,7 +46,7 @@ namespace Engine
         glBindVertexArray(0);
     }
 
-    void VertexArrayOpenGL::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer)
+    void VertexArrayOpenGL::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
     {
         glBindVertexArray(m_rendererID);
         vertexBuffer->Bind();
@@ -69,7 +69,7 @@ namespace Engine
         m_vertexBuffers.push_back(vertexBuffer);
     }
 
-    void VertexArrayOpenGL::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer)
+    void VertexArrayOpenGL::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
     {
         glBindVertexArray(m_rendererID);
         indexBuffer->Bind();

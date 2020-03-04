@@ -2,7 +2,7 @@
 
 namespace Engine
 {
-    std::unique_ptr<Renderer::SceneData> Renderer::s_sceneData = std::make_unique<Renderer::SceneData>(Renderer::SceneData());
+    Scope<Renderer::SceneData> Renderer::s_sceneData = std::make_unique<Renderer::SceneData>(Renderer::SceneData());
 
     void Renderer::BeginScene(const Camera& camera)
     {
@@ -14,7 +14,7 @@ namespace Engine
 
     }
 
-    void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const glm::mat4& transform)
+    void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform)
     {
         shader->Bind();
         shader->UploadUniformMat4("u_viewProjection", s_sceneData->m_viewProjectionMatrix);

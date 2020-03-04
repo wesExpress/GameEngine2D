@@ -12,11 +12,13 @@ class TestLayer : public Engine::Layer
         virtual void OnImGuiRender() override;
 
     private:
-        std::shared_ptr<Engine::Shader> m_shaderMultiColor;
-        std::shared_ptr<Engine::VertexArray> m_triangleVA;
+        Engine::Ref<Engine::Shader> m_shaderMultiColor;
+        Engine::Ref<Engine::VertexArray> m_triangleVA;
 
-        std::shared_ptr<Engine::Shader> m_squareShader;
-        std::shared_ptr<Engine::VertexArray> m_squareVA;
+        Engine::Ref<Engine::Shader> m_squareShader, m_textureShader;
+        Engine::Ref<Engine::VertexArray> m_squareVA;
+
+        Engine::Ref<Engine::Texture2D> m_texture;
 
         Engine::CameraController m_cameraController;
         glm::vec3 m_cameraPosition;

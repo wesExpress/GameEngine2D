@@ -18,7 +18,7 @@ namespace Engine
             void SetPos(const glm::vec3& position);
             void SetRotation(float rotation);
         private:
-            std::unique_ptr<Camera> m_camera;
+            Scope<Camera> m_camera;
     };
 }
 

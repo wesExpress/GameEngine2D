@@ -6,6 +6,7 @@
 #include "Engine/Layer.h"
 #include "Engine/LayerStack.h"
 #include "Engine/ImGui/ImGuiLayer.h"
+#include "Engine/EngineDefines.h"
 
 #include "Event/Event.h"
 #include "Event/WindowEvent.h"
@@ -31,7 +32,7 @@ namespace Engine
             bool m_isRunning = true;
 
             ImGuiLayer* m_imguiLayer = nullptr;
-            std::unique_ptr<Window> m_window;
+            Scope<Window> m_window;
             LayerStack m_layerStack;
 
             static EngineApp* m_instance;
