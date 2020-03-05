@@ -4,6 +4,7 @@
 #include "EngineDefines.h"
 #include "Platform/GLFW/TimeGLFW.h"
 #include "Timestep.h"
+#include "Rendering/Renderer.h"
 
 namespace Engine
 {
@@ -17,6 +18,8 @@ namespace Engine
         m_window = Scope<Window>(Window::Create());
         m_window->SetEventCallback(BIND_FN(EngineApp::OnEvent));
         m_window->SetVsync(false);
+        
+        Renderer::Init();
 
         m_imguiLayer = new ImGuiLayer();
         PushOverlay(m_imguiLayer);

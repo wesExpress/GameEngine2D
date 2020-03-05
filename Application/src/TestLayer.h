@@ -12,13 +12,14 @@ class TestLayer : public Engine::Layer
         virtual void OnImGuiRender() override;
 
     private:
-        Engine::Ref<Engine::Shader> m_shaderMultiColor;
+        Engine::ShaderLibrary m_shaderLibrary;
+    
         Engine::Ref<Engine::VertexArray> m_triangleVA;
 
-        Engine::Ref<Engine::Shader> m_squareShader, m_textureShader;
         Engine::Ref<Engine::VertexArray> m_squareVA;
 
         Engine::Ref<Engine::Texture2D> m_texture;
+        Engine::Ref<Engine::Texture2D> m_logo;
 
         Engine::CameraController m_cameraController;
         glm::vec3 m_cameraPosition;

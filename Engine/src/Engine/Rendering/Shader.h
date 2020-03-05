@@ -1,7 +1,9 @@
 #ifndef __SHADER_H__
 #define __SHADER_H__
 
+#include "EngineDefines.h"
 #include <glm/glm.hpp>
+
 namespace Engine
 {
     class Shader
@@ -9,10 +11,13 @@ namespace Engine
         public:
             virtual ~Shader() {}
 
+            static Ref<Shader> Create(const std::string& filename);
+            static Ref<Shader> Create(const std::string& name, const std::string& vertexSrc, const std::string& fragSrc);
+
+            virtual const std::string& GetName() const = 0;
+
             virtual void Bind() const = 0;
             virtual void UnBind() const = 0;
-
-            static Shader* Create(const std::string& vertexSrc, const std::string& fragSrc);
 
             virtual void UploadUniformInt(const std::string& name, const int& value) = 0;
 
@@ -23,6 +28,19 @@ namespace Engine
 
             virtual void UploadUniformMat3(const std::string& name, const glm::mat3& matrix) = 0;
             virtual void UploadUniformMat4(const std::string& name, const glm::mat4& matrix) = 0;
+    };
+
+    class ShaderLibrary
+    {
+        public:
+            void Add(const std::string& name, const Ref<Shader>& shader);
+            void Add(const Ref<Shader>& shader);
+            Ref<Shader> Load(const std::string& name);
+            Ref<Shader> Get(const std::string& name);
+        private:
+            bool Exists(const std::string& name);
+        private:
+            std::unordered_map<std::string, Ref<Shader>> m_shaders;
     };
 }
 

@@ -1,6 +1,9 @@
 #include <memory>
 #include <string>
 #include <sstream>
+#include <fstream>
 #include <vector>
+#include <array>
 #include <functional>
 #include <utility>
+#include <unordered_map>

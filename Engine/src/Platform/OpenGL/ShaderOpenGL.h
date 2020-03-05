@@ -1,6 +1,8 @@
 #ifndef __SHADEROPENGL_H__
 #define __SHADEROPENGL_H__
 
+#include <glad/glad.h>
+
 #include "Rendering/Shader.h"
 
 namespace Engine
@@ -8,9 +10,12 @@ namespace Engine
     class ShaderOpenGL : public Shader
     {
         public:
-            ShaderOpenGL(const std::string& vertexSrc, const std::string& fragSrc);
+            ShaderOpenGL(const std::string& filename);
+            ShaderOpenGL(const std::string& name, const std::string& vertexSrc, const std::string& fragSrc);
             virtual ~ShaderOpenGL();
 
+            virtual const std::string& GetName() const override { return m_name; }
+        
             virtual void Bind() const override;
             virtual void UnBind() const override;
 
@@ -24,7 +29,13 @@ namespace Engine
             virtual void UploadUniformMat3(const std::string& name, const glm::mat3& matrix) override;
             virtual void UploadUniformMat4(const std::string& name, const glm::mat4& matrix) override;
         private:
+            std::string ParseString(const std::string& filePath);
+            std::string ReadFile(const std::string& filename);
+            std::unordered_map<GLenum, std::string> PreProcess(const std::string& fileSource);
+            void Compile(const std::unordered_map<GLenum, std::string>& shaderSources);
+        private:
             uint32_t m_rendererID;
+            std::string m_name;
     };
 }
 
