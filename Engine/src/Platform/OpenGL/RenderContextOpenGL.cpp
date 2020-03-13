@@ -1,5 +1,6 @@
 #include "OpenGL/RenderContextOpenGL.h"
 #include "Logging.h"
+#include "EngineDefines.h"
 
 namespace Engine
 {
@@ -16,10 +17,7 @@ namespace Engine
     void RenderContextOpenGL::Init()
     {
         glfwMakeContextCurrent(m_windowHandle);
-        if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-        {
-            ENGINE_ERROR("Glad failed to initialize!");
-        }
+        ENGINE_ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "Glad failed to initialize!");
 
         ENGINE_INFO("OpenGL Info:");
         ENGINE_INFO("    Vendor:   {0}", glGetString(GL_VENDOR));

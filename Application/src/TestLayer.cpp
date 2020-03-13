@@ -5,7 +5,8 @@
 
 TestLayer::TestLayer()
 :
-Engine::Layer("Test Layer"), m_cameraPosition(0.0f), squareTransform(0.0f)
+Engine::Layer("Test Layer"), m_cameraPosition(0.0f), squareTransform(0.0f),
+m_cameraController(1280.0f / 720.0f)
 {
     // triangle rendering
 
@@ -80,54 +81,7 @@ Engine::Layer("Test Layer"), m_cameraPosition(0.0f), squareTransform(0.0f)
 void TestLayer::OnUpdate(const Engine::Timestep& ts)
 {
     //CLIENT_TRACE("Delta time: {0}", ts.GetTimeSeconds());
-
-    if(Engine::Input::IsKeyPressed(KEY_W) || Engine::Input::IsKeyPressed(KEY_UP))
-    {
-        m_cameraPosition.y += cameraMoveSpeed * ts.GetTimeSeconds();
-    }
-    else if(Engine::Input::IsKeyPressed(KEY_S) || Engine::Input::IsKeyPressed(KEY_DOWN))
-    {
-        m_cameraPosition.y -= cameraMoveSpeed * ts.GetTimeSeconds();
-    }
-
-    if(Engine::Input::IsKeyPressed(KEY_A) || Engine::Input::IsKeyPressed(KEY_LEFT))
-    {
-        m_cameraPosition.x -= cameraMoveSpeed * ts.GetTimeSeconds();
-    }
-    else if(Engine::Input::IsKeyPressed(KEY_D) || Engine::Input::IsKeyPressed(KEY_RIGHT))
-    {
-        m_cameraPosition.x += cameraMoveSpeed * ts.GetTimeSeconds();
-    }
-
-    if(Engine::Input::IsKeyPressed(KEY_Q))
-    {
-        cameraRotation -= cameraRotateSpeed * ts.GetTimeSeconds();
-    }
-    else if(Engine::Input::IsKeyPressed(KEY_E))
-    {
-        cameraRotation += cameraRotateSpeed * ts.GetTimeSeconds();
-    }
-
-    if(Engine::Input::IsKeyPressed(KEY_J))
-    {
-        squareTransform.x -= cameraMoveSpeed * ts.GetTimeSeconds();
-    }
-    else if(Engine::Input::IsKeyPressed(KEY_L))
-    {
-        squareTransform.x += cameraMoveSpeed * ts.GetTimeSeconds();
-    }
-
-    if(Engine::Input::IsKeyPressed(KEY_I))
-    {
-        squareTransform.y -= cameraMoveSpeed * ts.GetTimeSeconds();
-    }
-    else if(Engine::Input::IsKeyPressed(KEY_K))
-    {
-        squareTransform.y += cameraMoveSpeed * ts.GetTimeSeconds();
-    }
-
-    m_cameraController.SetPos(m_cameraPosition);
-    m_cameraController.SetRotation(cameraRotation);
+    m_cameraController.OnUpdate(ts);
 
     Engine::RendererCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
     Engine::RendererCommand::Clear();
@@ -166,4 +120,9 @@ void TestLayer::OnImGuiRender()
     ImGui::Begin("Settings");
     ImGui::ColorEdit3("Square Color", glm::value_ptr(squareColor));
     ImGui::End();
+}
+
+void TestLayer::OnEvent(Engine::Event& e)
+{
+    m_cameraController.OnEvent(e);
 }

@@ -9,8 +9,10 @@ namespace Engine
     {
         public:
             OrthographicCamera();
-            OrthographicCamera(float left, float right, float top, float bottom);
-            OrthographicCamera(float left, float right, float top, float bottom, float near, float far);
+            OrthographicCamera(float left, float right, float bottom, float top);
+            OrthographicCamera(float left, float right, float bottom, float top, float nearClip , float farClip);
+
+            void SetProjection(float left, float right, float bottom, float top);
 
             virtual void Update() override;
     };

@@ -29,7 +29,10 @@ namespace Engine
 
         private:
             bool OnWindowCloseEvent(WindowCloseEvent& e);
+            bool OnWindowResizeEvent(WindowResizeEvent& e);
+
             bool m_isRunning = true;
+            bool m_isMinimized = false;
 
             ImGuiLayer* m_imguiLayer = nullptr;
             Scope<Window> m_window;

@@ -3,6 +3,7 @@
 #include "Event/WindowEvent.h"
 #include "Event/MouseEvent.h"
 #include "Platform/OpenGL/RenderContextOpenGL.h"
+#include "EngineDefines.h"
 
 namespace Engine
 {
@@ -28,55 +29,44 @@ namespace Engine
 
     void WindowGLFW::Init(const WindowProps& props)
     {
-    if (!glfwInit())
-        {
-            ENGINE_ERROR("GLFW failed to initialize!");
-        }
-        else
-        {
-#ifdef __APPLE__
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-            glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#endif
+        ENGINE_ASSERT(glfwInit(), "GLFW failed to initialize!");
+        ENGINE_INFO("GLFW initialized.");
 
-            ENGINE_INFO("GLFW initialized.");
+        #ifdef __APPLE__
+                    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+                    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+                    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        #endif
 
-            m_windowData = WindowProps(props);
+        m_windowData = WindowProps(props);
 
-            m_window = glfwCreateWindow(
-            m_windowData.width, 
-            m_windowData.height, 
-            m_windowData.title.c_str(), NULL, NULL);
-            SetVsync(true);
+        m_window = glfwCreateWindow(
+        m_windowData.width, 
+        m_windowData.height, 
+        m_windowData.title.c_str(), NULL, NULL);
+        SetVsync(true);
 
-            if (m_window == NULL)
-            {
-                ENGINE_ERROR("Window failed to be created!");
-            }
-            else
-            {
-                ENGINE_INFO("Window created: {0}x{1}, {2}", 
-                m_windowData.width, 
-                m_windowData.height, 
-                m_windowData.title);
+        ENGINE_ASSERT(m_window, "Window failed to be created!");
+        ENGINE_INFO("Window created: {0}x{1}, {2}",
+            m_windowData.width,
+            m_windowData.height,
+            m_windowData.title);
 
-                m_renderContext = new RenderContextOpenGL(m_window);
-                m_renderContext->Init();
+        m_renderContext = new RenderContextOpenGL(m_window);
+        m_renderContext->Init();
 
-                glfwSetWindowUserPointer(m_window, &m_windowData);
+        glfwSetWindowUserPointer(m_window, &m_windowData);
 
-                // GLFW callbacks
-                glfwSetErrorCallback(SetGLFWErrorCallback);
-                SetKeyCallback();
-                SetCharCallback();
-                SetWindowCloseCallback();
-                SetWindowResizeCallback();
-                SetMouseButtonCallback();
-                SetMouseMoveCallback();
-                SetMouseScrollCallback();
-            }
-        }
+        // GLFW callbacks
+        glfwSetErrorCallback(SetGLFWErrorCallback);
+        SetKeyCallback();
+        SetCharCallback();
+        SetWindowCloseCallback();
+        SetWindowResizeCallback();
+        SetMouseButtonCallback();
+        SetMouseMoveCallback();
+        SetMouseScrollCallback();
+        
     }
 
     void WindowGLFW::Update()
