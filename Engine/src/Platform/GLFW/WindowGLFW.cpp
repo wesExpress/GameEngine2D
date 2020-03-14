@@ -137,6 +137,18 @@ namespace Engine
 
     void WindowGLFW::SetWindowResizeCallback()
     {
+        #ifdef __APPLE__
+        glfwSetFramebufferSizeCallback(m_window, [](GLFWwindow* window, int width, int height)
+        {
+            WindowProps& data = *(WindowProps*)glfwGetWindowUserPointer(window);
+            data.width = width;
+            data.height = height;
+
+            WindowResizeEvent e(width, height);
+
+            data.EventCallback(e);
+        });
+        #else
         glfwSetWindowSizeCallback(m_window, [](GLFWwindow* window, int width, int height)
         {
             WindowProps& data = *(WindowProps*)glfwGetWindowUserPointer(window);
@@ -147,6 +159,7 @@ namespace Engine
 
             data.EventCallback(e);
         });
+        #endif
     };
 
     void WindowGLFW::SetMouseButtonCallback()
