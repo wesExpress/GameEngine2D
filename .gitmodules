@@ -10,3 +10,6 @@
 [submodule "Engine/vendor/glfw"]
 	path = Engine/vendor/glfw
 	url = https://github.com/glfw/glfw.git
+[submodule "Engine/vendor/openal-soft"]
+	path = Engine/vendor/openal-soft
+	url = https://github.com/kcat/openal-soft.git
