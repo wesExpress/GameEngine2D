@@ -8,10 +8,7 @@ namespace Engine
     :
     m_windowHandle(windowHandle)
     {
-        if (m_windowHandle == NULL)
-        {
-            ENGINE_ERROR("Window handle is NULL!");
-        }
+        ENGINE_ASSERT(m_windowHandle, "Window handle is null!");
     }
 
     void RenderContextOpenGL::Init()

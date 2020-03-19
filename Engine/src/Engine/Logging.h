@@ -9,9 +9,6 @@ namespace Engine
     class Log
     {
         public:
-            Log();
-            ~Log();
-            
             static void Init();
 
             inline static std::shared_ptr<spdlog::logger>& GetEngineLogger() { return m_engineLogger; }
