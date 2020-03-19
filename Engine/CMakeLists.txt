@@ -4,16 +4,18 @@ set( GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE )
 set( GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE )
 set( GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE )
 
-# add sub directories for projects with cmake support (currently glad, spdlog, GLFW)
+# add sub directories for projects with cmake support ( glad, spdlog, GLFW, openal-soft)
 
 add_subdirectory( vendor/glad )
 add_subdirectory( vendor/spdlog )
 add_subdirectory( vendor/glfw )
+add_subdirectory( vendor/openal-soft )
 
 # source code
 file(GLOB 
     SOURCES CONFIGURE_DEPENDS
         src/Engine/*.cpp 
+        src/Engine/Audio/*.cpp
         src/Engine/Rendering/*.cpp
         src/Engine/Rendering/Camera/*.cpp
         src/Engine/ImGui/*.cpp 
@@ -37,6 +39,7 @@ target_link_libraries( Engine
         GLAD
         glfw
         spdlog
+        OpenAL
 )
 target_precompile_headers( Engine 
     PUBLIC 
@@ -55,5 +58,6 @@ target_include_directories( Engine
     PRIVATE
         vendor/glfw/include
         vendor/glad/include
+        vendor/openal-soft/include
         vendor/stb_image
 )
