@@ -5,6 +5,7 @@
 #include "Platform/GLFW/TimeGLFW.h"
 #include "Timestep.h"
 #include "Rendering/Renderer.h"
+#include "Audio/AudioMaster.h"
 
 namespace Engine
 {
@@ -20,9 +21,15 @@ namespace Engine
         m_window->SetVsync(false);
         
         Renderer::Init();
+        AudioMaster::Init();
 
         m_imguiLayer = new ImGuiLayer();
         PushOverlay(m_imguiLayer);
+    }
+
+    EngineApp::~EngineApp()
+    {
+        AudioMaster::Shutdown();
     }
 
     void EngineApp::Run()
