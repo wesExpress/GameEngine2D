@@ -7,7 +7,7 @@
 
 namespace Engine
 {
-    VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size)
+    Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size)
     {
         switch(Renderer::Get())
         {
@@ -15,14 +15,14 @@ namespace Engine
                 ENGINE_ASSERT(0, "No renderer API is not supported!");
                 return nullptr;
             case RendererAPI::API::OpenGL:
-                return new VertexBufferOpenGL(vertices, size);
+                return std::make_shared<VertexBufferOpenGL>(vertices, size);
             default:
                 ENGINE_ASSERT(0, "Unsupported/unknown render API!");
                 return nullptr;
         }
     }
 
-    IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t count)
+    Ref<IndexBuffer> IndexBuffer::Create(uint32_t* indices, uint32_t count)
     {
         switch(Renderer::Get())
         {
@@ -30,7 +30,7 @@ namespace Engine
                 ENGINE_ASSERT(0, "No renderer API is not supported!");
                 return nullptr;
             case RendererAPI::API::OpenGL:
-                return new IndexBufferOpenGL(indices, count);
+                return std::make_shared<IndexBufferOpenGL>(indices, count);
             default:
                 ENGINE_ASSERT(0, "Unsupported/unknown render API!");
                 return nullptr;

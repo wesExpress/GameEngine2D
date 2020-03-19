@@ -5,12 +5,11 @@
 
 TestLayer::TestLayer()
 :
-Engine::Layer("Test Layer"), m_cameraPosition(0.0f), squareTransform(0.0f),
-m_cameraController(1280.0f / 720.0f)
+Engine::Layer("Test Layer"), m_cameraController(1280.0f / 720.0f), m_cameraPosition(0.0f), squareTransform(0.0f)
 {
     // triangle rendering
 
-    m_triangleVA.reset(Engine::VertexArray::Create());
+    m_triangleVA = Engine::VertexArray::Create();
 
     float triangleVertices[3 * 7] =
     {
@@ -20,7 +19,7 @@ m_cameraController(1280.0f / 720.0f)
     };
 
     Engine::Ref<Engine::VertexBuffer> triangleVB;
-    triangleVB.reset(Engine::VertexBuffer::Create(triangleVertices, sizeof(triangleVertices)));
+    triangleVB = Engine::VertexBuffer::Create(triangleVertices, sizeof(triangleVertices));
     triangleVB->SetLayout({
         { Engine::ShaderDataType::Float3, "a_Position"},
         { Engine::ShaderDataType::Float4, "a_Color"}
@@ -29,12 +28,12 @@ m_cameraController(1280.0f / 720.0f)
 
     uint32_t triangleIndices[3] = { 0, 1, 2 };
     Engine::Ref<Engine::IndexBuffer> triangleIB;
-    triangleIB.reset(Engine::IndexBuffer::Create(triangleIndices, sizeof(triangleIndices) / sizeof(uint32_t)));
+    triangleIB = Engine::IndexBuffer::Create(triangleIndices, sizeof(triangleIndices) / sizeof(uint32_t));
     m_triangleVA->SetIndexBuffer(triangleIB);
 
     // square rendering
 
-    m_squareVA.reset(Engine::VertexArray::Create());
+    m_squareVA = Engine::VertexArray::Create();
 
     float squareVertices[5 * 4] =
     {
@@ -45,7 +44,7 @@ m_cameraController(1280.0f / 720.0f)
     };
 
     Engine::Ref<Engine::VertexBuffer> squareVB;
-    squareVB.reset(Engine::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+    squareVB = Engine::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
     squareVB->SetLayout({
         { Engine::ShaderDataType::Float3, "a_Position"},
         { Engine::ShaderDataType::Float2, "a_TexCord"}
@@ -54,7 +53,7 @@ m_cameraController(1280.0f / 720.0f)
 
     uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
     Engine::Ref<Engine::IndexBuffer> squareIB;
-    squareIB.reset(Engine::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+    squareIB = Engine::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
     m_squareVA->SetIndexBuffer(squareIB);
     
     std::string path;
@@ -83,8 +82,8 @@ void TestLayer::OnUpdate(const Engine::Timestep& ts)
     //CLIENT_TRACE("Delta time: {0}", ts.GetTimeSeconds());
     m_cameraController.OnUpdate(ts);
 
-    Engine::RendererCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
-    Engine::RendererCommand::Clear();
+    Engine::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
+    Engine::RenderCommand::Clear();
 
     Engine::Renderer::BeginScene(m_cameraController.GetCamera());
 

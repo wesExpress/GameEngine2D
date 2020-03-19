@@ -42,7 +42,7 @@ namespace Engine
 
                 CameraData()
                     :
-                    pos(glm::vec3()), aspectRatio(4.0f/3.0f), nearClip(-1.0f), farClip(1.0f), rotation(0.0f), fov(65.0f)
+                    pos(glm::vec3()), fov(65.0f), aspectRatio(4.0f/3.0f), nearClip(-1.0f), farClip(1.0f), rotation(0.0f)
                 {}
 
                 CameraData(const glm::vec3 pos, float fov, float aspectRatio, float nearClip, float farClip, float rotation)

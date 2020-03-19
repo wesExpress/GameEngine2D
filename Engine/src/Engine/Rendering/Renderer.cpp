@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Renderer2D.h"
 
 namespace Engine
 {
@@ -6,7 +7,8 @@ namespace Engine
 
     void Renderer::Init()
     {
-        RendererCommand::Init();
+        RenderCommand::Init();
+        Renderer2D::Init();
     }
 
     void Renderer::BeginScene(const Camera& camera)
@@ -26,11 +28,11 @@ namespace Engine
         shader->UploadUniformMat4("u_transform", transform);
         
         vertexArray->Bind();
-        RendererCommand::DrawIndexed(vertexArray);
+        RenderCommand::DrawIndexed(vertexArray);
     }
 
     void Renderer::OnWindowResize(uint32_t width, uint32_t height)
     {
-        RendererCommand::SetViewPort(0, 0, width, height);
+        RenderCommand::SetViewPort(0, 0, width, height);
     }
 }

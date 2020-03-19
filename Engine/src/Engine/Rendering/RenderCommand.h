@@ -1,5 +1,5 @@
-#ifndef __RENDERERCOMMAND_H__
-#define __RENDERERCOMMAND_H__
+#ifndef __RenderCommand_H__
+#define __RenderCommand_H__
 
 #include "RendererAPI.h"
 
@@ -7,7 +7,7 @@
 
 namespace Engine
 {
-    class RendererCommand
+    class RenderCommand
     {
         public:
             inline static void Init()

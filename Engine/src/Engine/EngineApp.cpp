@@ -58,13 +58,11 @@ namespace Engine
         dispatcher.Dispatch<WindowCloseEvent>(BIND_FN(EngineApp::OnWindowCloseEvent));
         dispatcher.Dispatch<WindowResizeEvent>(BIND_FN(EngineApp::OnWindowResizeEvent));
 
-        for(auto it = m_layerStack.end(); it != m_layerStack.begin(); )
+        for (auto it = m_layerStack.rbegin(); it != m_layerStack.rend(); ++it)
         {
-            (*--it)->OnEvent(e);
+            (*it)->OnEvent(e);
             if (e.handled)
-            {
                 break;
-            }
         }
     }
 

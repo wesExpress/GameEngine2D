@@ -183,6 +183,31 @@ namespace Engine
         glUseProgram(0);
     }
 
+    void ShaderOpenGL::SetInt(const std::string& name, int value)
+    {
+        UploadUniformInt(name, value);
+    }
+
+    void ShaderOpenGL::SetFloat(const std::string& name, float value)
+    {
+        UploadUniformFloat(name, value);
+    }
+
+    void ShaderOpenGL::SetFloat3(const std::string& name, const glm::vec3& value)
+    {
+        UploadUniformFloat3(name, value);
+    }
+
+    void ShaderOpenGL::SetFloat4(const std::string& name, const glm::vec4& value)
+    {
+        UploadUniformFloat4(name, value);
+    }
+
+    void ShaderOpenGL::SetMat4(const std::string& name, const glm::mat4& value)
+    {
+        UploadUniformMat4(name, value);
+    }
+
     void ShaderOpenGL::UploadUniformInt(const std::string& name, const int& value)
     {
         GLint location = glGetUniformLocation(m_rendererID, name.c_str());

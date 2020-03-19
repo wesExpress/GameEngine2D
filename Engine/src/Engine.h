@@ -20,10 +20,10 @@
 #include "Engine/Timestep.h"
 
 #include "Rendering/Renderer.h"
+#include "Rendering/Renderer2D.h"
 #include "Rendering/VertexArray.h"
 #include "Rendering/Shader.h"
 #include "Rendering/Texture.h"
-
 #include "Rendering/Camera/CameraController.h"
 
 #endif

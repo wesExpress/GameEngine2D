@@ -2,6 +2,7 @@
 #define __DEFINES_H__
 
 #include <memory>
+#include "Logging.h"
 
 #define BIND_FN(x) std::bind(&x, this, std::placeholders::_1)
 #define BIT(x) (1 << x)
