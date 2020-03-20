@@ -7,13 +7,6 @@ namespace Engine
 	{
 		ALBuffer buffer;
 
-		std::string path;
-#ifdef __APPLE__
-		path = "/Users/wesleypeters/random_code/GameEngine2D/Application/assets/";
-#else
-		path = "C:/Users/wcp/source/projects/GameEngine2D/Application/assets/";
-#endif
-
 		m_buffers.push_back(buffer);
 	}
 }

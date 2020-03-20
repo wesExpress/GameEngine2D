@@ -46,14 +46,7 @@ namespace Engine
 		uint32_t whiteTextureData = 0xffffffff;
 		s_data->whiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
 
-		std::string path;
-#ifdef __APPLE__
-		path = "/Users/wesleypeters/random_code/GameEngine2D/Application/assets/";
-#else
-		path = "C:/Users/wcp/source/projects/GameEngine2D/Application/assets/";
-#endif
-
-		s_data->textureShader = Engine::Shader::Create(path + "shaders/Texture.glsl");
+		s_data->textureShader = Engine::Shader::Create(ASSET_PATH + "shaders/Texture.glsl");
 		s_data->textureShader->Bind();
 		s_data->textureShader->SetInt("u_Texture", 0);
 	}

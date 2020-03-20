@@ -56,23 +56,16 @@ Engine::Layer("Test Layer"), m_cameraController(1280.0f / 720.0f), m_cameraPosit
     squareIB = Engine::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
     m_squareVA->SetIndexBuffer(squareIB);
     
-    std::string path;
-    #ifdef __APPLE__
-            path = "/Users/wesleypeters/random_code/GameEngine2D/Application/assets/";
-    #else
-            path = "C:/Users/wcp/source/projects/GameEngine2D/Application/assets/";
-    #endif
-    
-    m_shaderLibrary.Add(Engine::Shader::Create(path+"shaders/SingleColor.glsl"));
-    m_shaderLibrary.Add(Engine::Shader::Create(path+"shaders/MultiColor.glsl"));
+    m_shaderLibrary.Add(Engine::Shader::Create(ASSET_PATH+"shaders/SingleColor.glsl"));
+    m_shaderLibrary.Add(Engine::Shader::Create(ASSET_PATH+"shaders/MultiColor.glsl"));
 
     std::string checkerboard = "textures/Checkerboard.png";
     std::string logo = "textures/ChernoLogo.png";
 
-    m_texture = Engine::Texture2D::Create(path+checkerboard);
-    m_logo = Engine::Texture2D::Create(path+logo);
+    m_texture = Engine::Texture2D::Create(ASSET_PATH+checkerboard);
+    m_logo = Engine::Texture2D::Create(ASSET_PATH+logo);
     
-    auto shader = m_shaderLibrary.Load(path+"shaders/Texture.glsl");
+    auto shader = m_shaderLibrary.Load(ASSET_PATH+"shaders/Texture.glsl");
     shader->Bind();
     shader->UploadUniformInt("u_texture", 0);
 }

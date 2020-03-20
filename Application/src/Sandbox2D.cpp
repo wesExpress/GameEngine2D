@@ -11,15 +11,8 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::OnAttach()
 {
-    std::string path;
-#ifdef __APPLE__
-    path = "/Users/wesleypeters/random_code/GameEngine2D/Application/assets/";
-#else
-    path = "C:/Users/wcp/source/projects/GameEngine2D/Application/assets/";
-#endif
-
     std::string checkerboard = "textures/Checkerboard.png";
-    m_texture = Engine::Texture2D::Create(path + checkerboard);
+    m_texture = Engine::Texture2D::Create(ASSET_PATH + checkerboard);
 }
 
 void Sandbox2D::OnDetach()
