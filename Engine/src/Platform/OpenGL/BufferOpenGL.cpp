@@ -11,7 +11,7 @@ namespace Engine
         glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
         glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
 
-        ENGINE_INFO("Created OpenGL Vertex Buffer.");
+        ENGINE_TRACE("Created OpenGL Vertex Buffer.");
     }
 
     VertexBufferOpenGL::~VertexBufferOpenGL()
@@ -37,7 +37,7 @@ namespace Engine
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rendererID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
 
-        ENGINE_INFO("Created OpenGL Index Buffer.");
+        ENGINE_TRACE("Created OpenGL Index Buffer.");
     }
 
     IndexBufferOpenGL::~IndexBufferOpenGL()

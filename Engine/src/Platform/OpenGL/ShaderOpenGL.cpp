@@ -46,6 +46,7 @@ namespace Engine
     ShaderOpenGL::~ShaderOpenGL()
     {
         glDeleteProgram(m_rendererID);
+        ENGINE_WARN("Deleted OpenGL shader.");
     }
 
     std::string ShaderOpenGL::ParseString(const std::string& filePath)
@@ -170,7 +171,7 @@ namespace Engine
 
         m_rendererID = program;
         
-        ENGINE_INFO("Created OpenGL shaders.");
+        ENGINE_TRACE("Created OpenGL shaders.");
     }
 
     void ShaderOpenGL::Bind() const
