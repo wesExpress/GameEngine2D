@@ -1,24 +1,16 @@
 #ifndef __AUDIOMASTER_H__
 #define __AUDIOMASTER_H__
 
-#include <AL/alc.h>
-#include "EngineDefines.h"
+#include "ALBuffer.h"
 
 namespace Engine
 {
 	class AudioMaster
 	{
 		public:
-			static void Init();
-			static void Shutdown();
+			void LoadSound(const std::string& file);
 		private:
-			struct OpenALData
-			{
-				ALCdevice* device;
-				ALCcontext* context;
-			};
-
-			static Scope<OpenALData> s_ALData;
+			std::vector<ALBuffer> m_buffers;
 	};
 }
 

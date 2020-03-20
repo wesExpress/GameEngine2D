@@ -5,13 +5,14 @@
 #include "Platform/GLFW/TimeGLFW.h"
 #include "Timestep.h"
 #include "Rendering/Renderer.h"
-#include "Audio/AudioMaster.h"
+#include "Audio/AudioBackend.h"
 
 namespace Engine
 {
     EngineApp* EngineApp::m_instance = nullptr;
 
     EngineApp::EngineApp()
+        : m_audioMaster(new AudioMaster())
     {   
         ENGINE_ASSERT(!m_instance, "App already exists!");
         m_instance = this;
@@ -21,15 +22,17 @@ namespace Engine
         m_window->SetVsync(false);
         
         Renderer::Init();
-        AudioMaster::Init();
+        AudioBackend::Init();
 
         m_imguiLayer = new ImGuiLayer();
         PushOverlay(m_imguiLayer);
+
+        m_audioMaster->LoadSound("sounds/bounce.wav");
     }
 
     EngineApp::~EngineApp()
     {
-        AudioMaster::Shutdown();
+        AudioBackend::Shutdown();
     }
 
     void EngineApp::Run()
