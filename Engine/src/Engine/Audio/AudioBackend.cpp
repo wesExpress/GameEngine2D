@@ -1,6 +1,6 @@
 #include "AudioBackend.h"
 
-#include <al/al.h>
+#include <AL/al.h>
 #include "Logging.h"
 
 namespace Engine
@@ -15,7 +15,7 @@ namespace Engine
 		ENGINE_INFO("OpenAL device: {0}", alcGetString(s_ALData->device, ALC_DEVICE_SPECIFIER));
 
 		s_ALData->context = alcCreateContext(s_ALData->device, nullptr);
-		ENGINE_ASSERT(alcMakeContextCurrent(s_ALData->context) == ALC_TRUE, "Could not set an OpenAL context!");
+		ENGINE_ASSERT((alcMakeContextCurrent(s_ALData->context) == ALC_TRUE), "Could not set an OpenAL context!");
 		ENGINE_INFO("OpenAL Info:");
 		ENGINE_INFO("	 Version: {0}", alGetString(AL_VERSION));
 		ENGINE_INFO("	 Renderer: {0}", alGetString(AL_RENDERER));
