@@ -12,7 +12,6 @@ namespace Engine
     EngineApp* EngineApp::m_instance = nullptr;
 
     EngineApp::EngineApp()
-        : m_audioMaster(new AudioMaster())
     {   
         ENGINE_ASSERT(!m_instance, "App already exists!");
         m_instance = this;
@@ -26,8 +25,6 @@ namespace Engine
 
         m_imguiLayer = new ImGuiLayer();
         PushOverlay(m_imguiLayer);
-
-        m_audioMaster->LoadSound("sounds/bounce.wav");
     }
 
     EngineApp::~EngineApp()

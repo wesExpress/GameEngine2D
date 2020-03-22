@@ -26,4 +26,7 @@
 #include "Rendering/Texture.h"
 #include "Rendering/Camera/CameraController.h"
 
+#include "Audio/AudioMaster.h"
+#include "Audio/ALSource.h"
+
 #endif

@@ -11,8 +11,6 @@
 #include "Event/Event.h"
 #include "Event/WindowEvent.h"
 
-#include "Audio/AudioMaster.h"
-
 namespace Engine
 {
     class EngineApp
@@ -44,8 +42,6 @@ namespace Engine
             static EngineApp* m_instance;
 
             float m_lastTime = 0.0f;
-
-            Scope<AudioMaster> m_audioMaster;
     };
 
     EngineApp* CreateApplication();

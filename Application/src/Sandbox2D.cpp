@@ -3,16 +3,21 @@
 #include <imgui.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <AL/al.h>
 
 Sandbox2D::Sandbox2D()
 	:
-	Engine::Layer("Sandbox2D"), m_cameraController(1280.0f / 720.0f)
+	Engine::Layer("Sandbox2D"), m_cameraController(1280.0f / 720.0f), 
+    m_audioMaster(new Engine::AudioMaster()), m_audioSource(new Engine::ALSource())
 {}
 
 void Sandbox2D::OnAttach()
 {
     std::string checkerboard = "textures/Checkerboard.png";
     m_texture = Engine::Texture2D::Create(ASSET_PATH + checkerboard);
+
+    m_audioMaster->LoadSound(ASSET_PATH + "sounds/bounce.wav", "bounce");
+    alSourcei(m_audioSource->GetSource(), AL_BUFFER, m_audioMaster->GetBuffer("bounce")->GetBuffer());
 }
 
 void Sandbox2D::OnDetach()
@@ -22,6 +27,11 @@ void Sandbox2D::OnDetach()
 void Sandbox2D::OnUpdate(const Engine::Timestep& ts)
 {
     m_cameraController.OnUpdate(ts);
+
+    if (Engine::Input::IsKeyPressed(KEY_P))
+    {
+        alSourcePlay(m_audioSource->GetSource());
+    }
 
     Engine::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
     Engine::RenderCommand::Clear();
