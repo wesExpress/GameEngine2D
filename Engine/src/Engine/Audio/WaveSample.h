@@ -26,6 +26,7 @@ namespace Engine
 			};
 		public:
 			WaveSample(const std::string& filePath, bool isBigEndian);
+			~WaveSample();
 
 			int CharToInt(char* buffer, int len, bool isBigEndian);
 

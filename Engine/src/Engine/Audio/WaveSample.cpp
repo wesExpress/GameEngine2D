@@ -97,6 +97,11 @@ namespace Engine
 		file.close();
 	}
 
+	WaveSample::~WaveSample()
+	{
+		delete m_data.data;
+	}
+
 	int WaveSample::CharToInt(char* buffer, int len, bool isBigEndian)
 	{
 		int a = 0;
