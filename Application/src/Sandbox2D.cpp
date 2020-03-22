@@ -8,7 +8,7 @@
 Sandbox2D::Sandbox2D()
 	:
 	Engine::Layer("Sandbox2D"), m_cameraController(1280.0f / 720.0f), 
-    m_audioMaster(new Engine::AudioMaster()), m_audioSource(new Engine::ALSource())
+    m_audioMaster(new Engine::AudioMaster()), m_audioSource1(new Engine::ALSource()), m_audioSource2(new Engine::ALSource())
 {}
 
 void Sandbox2D::OnAttach()
@@ -17,7 +17,8 @@ void Sandbox2D::OnAttach()
     m_texture = Engine::Texture2D::Create(ASSET_PATH + checkerboard);
 
     m_audioMaster->LoadSound(ASSET_PATH + "sounds/bounce.wav", "bounce");
-    alSourcei(m_audioSource->GetSource(), AL_BUFFER, m_audioMaster->GetBuffer("bounce")->GetBuffer());
+    alSourcei(m_audioSource1->GetSource(), AL_BUFFER, m_audioMaster->GetBuffer("bounce")->GetBuffer());
+    alSourcei(m_audioSource2->GetSource(), AL_BUFFER, m_audioMaster->GetBuffer("bounce")->GetBuffer());
 }
 
 void Sandbox2D::OnDetach()
@@ -30,7 +31,20 @@ void Sandbox2D::OnUpdate(const Engine::Timestep& ts)
 
     if (Engine::Input::IsKeyPressed(KEY_P))
     {
-        alSourcePlay(m_audioSource->GetSource());
+        m_audioSource1->Play();
+    }
+    else if (Engine::Input::IsKeyPressed(KEY_O))
+    {
+        m_audioSource1->Pause();
+    }
+    else if (Engine::Input::IsKeyPressed(KEY_U))
+    {
+        m_audioSource1->Stop();
+    }
+
+    if (Engine::Input::IsKeyPressed(KEY_T))
+    {
+        m_audioSource2->Play();
     }
 
     Engine::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });

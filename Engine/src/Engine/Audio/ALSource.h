@@ -12,8 +12,12 @@ namespace Engine
 			~ALSource();
 
 			ALuint GetSource();
+			void Play();
+			void Pause();
+			void Stop();
 		private:
 			ALuint m_source;
+			ALint m_status;
 	};
 }
 

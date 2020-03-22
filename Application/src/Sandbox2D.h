@@ -27,7 +27,8 @@ class Sandbox2D : public Engine::Layer
         glm::vec3 squarePos = {0.0f, 0.0f, 0.0f};
 
 		Engine::Ref<Engine::AudioMaster> m_audioMaster;
-		Engine::Ref<Engine::ALSource> m_audioSource;
+		Engine::Ref<Engine::ALSource> m_audioSource1;
+		Engine::Ref<Engine::ALSource> m_audioSource2;
 };
 
 #endif
