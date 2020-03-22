@@ -16,9 +16,9 @@ void Sandbox2D::OnAttach()
     std::string checkerboard = "textures/Checkerboard.png";
     m_texture = Engine::Texture2D::Create(ASSET_PATH + checkerboard);
 
-    m_audioMaster->LoadSound(ASSET_PATH + "sounds/bounce.wav", "bounce");
-    alSourcei(m_audioSource1->GetSource(), AL_BUFFER, m_audioMaster->GetBuffer("bounce")->GetBuffer());
-    alSourcei(m_audioSource2->GetSource(), AL_BUFFER, m_audioMaster->GetBuffer("bounce")->GetBuffer());
+    //m_audioMaster->LoadSound(ASSET_PATH + "sounds/bounce.wav", "bounce");
+    m_audioSource1->SetBuffer(ASSET_PATH + "sounds/bounce.wav", "bounce", m_audioMaster);
+    m_audioSource2->SetBuffer(ASSET_PATH + "sounds/bounce.wav", "bounce", m_audioMaster);
 }
 
 void Sandbox2D::OnDetach()
@@ -45,6 +45,11 @@ void Sandbox2D::OnUpdate(const Engine::Timestep& ts)
     if (Engine::Input::IsKeyPressed(KEY_T))
     {
         m_audioSource2->Play();
+    }
+
+    if (Engine::Input::IsKeyPressed(KEY_M))
+    {
+        m_audioSource2->SetPitch(2.0f);
     }
 
     Engine::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });

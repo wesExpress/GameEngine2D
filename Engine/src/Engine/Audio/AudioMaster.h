@@ -10,11 +10,11 @@ namespace Engine
 	{
 		public:
 			AudioMaster();
+
 			void LoadSound(const std::string& file, const std::string& bufferKey);
+
 			Ref<ALBuffer> GetBuffer(const std::string& bufferKey);
-		private:
-			char* LoadWAV(const std::string& filename, int& channels, int& sampleRate, int& bitsPerSecond, int& size);
-			int CharToInt(char* buffer, int len);
+			bool HasBuffer(const std::string& bufferKey);
 		private:
 			std::unordered_map <std::string, Ref<ALBuffer>> m_buffers;
 			bool m_isBigEndian;
